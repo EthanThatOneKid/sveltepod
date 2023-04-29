@@ -3,9 +3,10 @@
 // deno run -A --unstable main.ts
 //
 
+import { serve } from "std/http/server.ts";
 import { compile } from "svelte/compiler";
 
-Deno.serve(handle);
+serve(handle);
 
 async function handle(request: Request): Promise<Response> {
   const url = new URL(request.url);
@@ -23,7 +24,9 @@ async function handle(request: Request): Promise<Response> {
 }
 
 async function render() {
-  const sample = await Deno.readTextFile("./sample_const.svelte");
+  const sample = await Deno.readTextFile(
+    new URL(import.meta.resolve("./sample_const.svelte")),
+  );
   // TODO: Compile with SSR and without SSR and compare the JS results.
   const compiled = compile(sample, { generate: "ssr" });
   const { default: Component } = await import(
