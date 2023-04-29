@@ -5,6 +5,7 @@
 
 import { serve } from "std/http/server.ts";
 import { compile } from "svelte/compiler";
+import { importModule } from "x/import/mod.ts";
 
 serve(handle);
 
@@ -29,8 +30,8 @@ async function render() {
   );
   // TODO: Compile with SSR and without SSR and compare the JS results.
   const compiled = compile(sample, { generate: "ssr" });
-  const { default: Component } = await import(
-    `data:text/javascript;base64,${btoa(compiled.js.code)}`
+  const { default: Component } = await importModule(
+    `data:text/javascript;base64,${btoa(compiled.js.code)}`,
   );
   const rendered = Component.render({ boxes: [{ width: 10, height: 20 }] });
   return `<!DOCTYPE html>

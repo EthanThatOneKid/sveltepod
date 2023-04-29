@@ -1,6 +1,7 @@
 {
   "imports": {
     "std/": "https://deno.land/std@0.185.0/",
-    "svelte/": "https://esm.sh/svelte@3.58.0/"
+    "svelte/": "https://esm.sh/svelte@3.58.0/",
+    "x/import/": "https://deno.land/x/import@v0.1.7/"
   }
 }
