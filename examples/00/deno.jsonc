@@ -1,0 +1,5 @@
+{
+  "imports": {
+    "svelte/": "npm:/svelte@3.58.0/"
+  }
+}
