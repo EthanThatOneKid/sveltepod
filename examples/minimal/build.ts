@@ -27,6 +27,7 @@ export async function main() {
     bundle: true,
     outfile: "out.js",
     plugins: [
+      // https://svelte.dev/docs/svelte-compiler
       esbuild_svelte.default({
         preprocess: svelte_preprocess.default(),
       }),
