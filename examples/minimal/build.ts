@@ -21,6 +21,8 @@ export async function main() {
       return entryPoints;
     }, []);
 
+  console.log({ svelte_preprocess: svelte_preprocess.default });
+
   const result = await build({
     entryPoints,
     mainFields: ["svelte", "browser", "module", "main"],
@@ -28,8 +30,8 @@ export async function main() {
     outfile: "out.js",
     plugins: [
       // https://svelte.dev/docs/svelte-compiler
-      esbuild_svelte.default({
-        preprocess: svelte_preprocess.default(),
+      esbuild_svelte.default.default({
+        preprocess: svelte_preprocess.default.default(),
       }),
     ],
     logLevel: "info",
