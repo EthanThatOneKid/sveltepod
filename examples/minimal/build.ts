@@ -1,6 +1,6 @@
-import { build } from "https://deno.land/x/esbuild@v0.18.6/mod.js";
-import { parse } from "https://deno.land/std@0.192.0/flags/mod.ts";
-import * as esbuild_svelte from "https://esm.sh/esbuild-svelte@0.7.3";
+import { build } from "https://deno.land/x/esbuild@v0.18.14/mod.js";
+import { parse } from "https://deno.land/std@0.194.0/flags/mod.ts";
+import * as esbuild_svelte from "https://esm.sh/esbuild-svelte@0.7.4/";
 import * as svelte_preprocess from "https://esm.sh/svelte-preprocess@5.0.4";
 
 if (import.meta.main) {
