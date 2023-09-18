@@ -1,0 +1,9 @@
+{
+  "lock": true,
+  "tasks": {
+    "udd": "deno run -r -A https://deno.land/x/udd/main.ts examples/minimal/build.ts && deno task lock",
+    "lock": "deno cache --lock=deno.lock --lock-write examples/minimal/build.ts",
+    "all": "deno task udd && deno lint && deno fmt",
+    "example:hono": "deno run -A examples/hono/main.ts"
+  }
+}
