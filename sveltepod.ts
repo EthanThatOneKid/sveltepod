@@ -1,11 +1,25 @@
-import { build, esbuild_svelte, parse, svelte_preprocess } from "./deps.ts";
+import type { CompileOptions } from "./deps.ts";
+import {
+  build,
+  compile,
+  denoPlugins,
+  // esbuild_svelte,
+  parse,
+  preprocess,
+  svelte2tsx,
+  svelte_preprocess,
+} from "./deps.ts";
 
 if (import.meta.main) {
-  const options = parseSveltepodOptions(Deno.args);
-  await sveltepod(options);
+  await sveltepod(parseSveltepodOptions(Deno.args));
+  Deno.exit(0);
 }
 
-function parseSveltepodOptions(args: string[]): SveltepodOptions {
+/**
+ * parseSveltepodOptions parses the options for the sveltepod function from
+ * the given args.
+ */
+export function parseSveltepodOptions(args: string[]): SveltepodOptions {
   const flags = parse(args);
   const entryPoints = flags._
     .reduce<string[]>((entryPoints, entryPoint) => {
@@ -25,25 +39,60 @@ function parseSveltepodOptions(args: string[]): SveltepodOptions {
  * SveltepodOptions are the options for the sveltepod function.
  */
 export interface SveltepodOptions {
+  /**
+   * entryPoints are the glob patterns for the entry points.
+   */
   entryPoints: string[];
+
+  /**
+   * compileOptions are the options for the Svelte compiler.
+   */
+  compileOptions?: CompileOptions;
 }
 
-// https://github.com/EMH333/esbuild-svelte/blob/079a55a972dfe7f04fa27a46c0f605dc06a96178/example-ts/buildscript.js
-
+/**
+ * sveltepod builds the given entry points.
+ */
 export async function sveltepod(options: SveltepodOptions) {
-  const result = await build({
-    entryPoints: options.entryPoints,
-    mainFields: ["svelte", "browser", "module", "main"],
-    bundle: true,
-    outfile: "out.js",
-    plugins: [
-      // https://svelte.dev/docs/svelte-compiler
-      esbuild_svelte.default({
-        preprocess: svelte_preprocess.default(),
-      }),
-    ],
-    logLevel: "info",
-  });
+  // const sveltePath = options.sveltePath ?? "svelte";
+  const results = await Promise.all(
+    options.entryPoints.map(async (entryPoint) => {
+      const source = Deno.readTextFileSync(entryPoint);
+      const { code } = await preprocess(
+        source,
+        [
+          svelte_preprocess(),
+        ],
+        {
+          filename: entryPoint,
+        },
+      );
 
-  console.info(result);
+      // https://svelte.dev/docs/svelte-compiler#types-compileoptions
+      const outputFileJS = entryPoint.replace(/\.svelte$/, "/main.js");
+      const result = compile(code, options.compileOptions);
+      Deno.mkdirSync(outputFileJS.replace(/\/[^\/]+$/, ""), {
+        recursive: true,
+      });
+      Deno.writeTextFileSync(outputFileJS, result.js.code);
+
+      // https://github.com/sveltejs/language-tools/tree/master/packages/svelte2tsx#readme
+      const outputFileTS = entryPoint.replace(/\.svelte$/, "/main.ts");
+      const tsxResult = svelte2tsx(source);
+      Deno.mkdirSync(outputFileTS.replace(/\/[^\/]+$/, ""), {
+        recursive: true,
+      });
+      Deno.writeTextFileSync(
+        outputFileTS,
+        tsxResult.code.replace(
+          /^\/\/\/\<reference types="svelte" \/>/,
+          `///<reference types="npm:svelte2tsx@0.6.23/svelte-shims.d.ts" />`,
+        ),
+      );
+      return result;
+    }),
+  );
+
+  console.info(results);
+  return results;
 }
