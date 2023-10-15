@@ -1,5 +1,5 @@
 export { build } from "https://deno.land/x/esbuild@v0.19.4/mod.js";
-export { parse } from "https://deno.land/std@0.203.0/flags/mod.ts";
+export { parse } from "https://deno.land/std@0.204.0/flags/mod.ts";
 export { denoPlugins } from "https://deno.land/x/esbuild_deno_loader@0.8.2/mod.ts";
 
 import esbuild_svelte_default from "npm:esbuild-svelte@0.8.0";

@@ -48,6 +48,9 @@ export interface SveltepodOptions {
    * compileOptions are the options for the Svelte compiler.
    */
   compileOptions?: CompileOptions;
+
+  // TODO: Add generation output configuration.
+  // TODO: Add sveltePath configuration.
 }
 
 /**
