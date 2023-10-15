@@ -50,7 +50,8 @@ export interface SveltepodOptions {
   compileOptions?: CompileOptions;
 
   // TODO: Add generation output configuration.
-  // TODO: Add sveltePath configuration.
+
+  svelte2tsxPath?: string;
 }
 
 /**
@@ -60,38 +61,63 @@ export async function sveltepod(options: SveltepodOptions) {
   // const sveltePath = options.sveltePath ?? "svelte";
   const results = await Promise.all(
     options.entryPoints.map(async (entryPoint) => {
+      // Read the source code.
       const source = Deno.readTextFileSync(entryPoint);
+
+      // Generate the TypeScript code.
+      const lines: string[] = [];
+
+      // Generate component types.
+      // Reference:
+      // - https://github.com/sveltejs/language-tools/tree/3dc6ede879be9f36eda2f023c3c53c55df631e3a/packages/svelte2tsx#:~:text=The%20TSX%20can%20be%20type%20checked%20using%20the%20included%20svelte%2Djsx.d.ts%20and%20svelte%2Dshims.d.ts.
+      const svelte2tsxPath = options.svelte2tsxPath ?? "npm:svelte2tsx@0.6.23";
+      const tsxResult = svelte2tsx(source)
+        .code
+        .replace(
+          /^\/\/\/\<reference types="svelte" \/>/,
+          ["/svelte-jsx.d.ts", "/svelte-shims.d.ts"]
+            .map((path) => `import "${svelte2tsxPath}${path}";`)
+            .join("\n"),
+        )
+        .replace(
+          /export default class extends __sveltets_2_createSvelte2TsxComponent/,
+          "export class TsxComponent extends __sveltets_2_createSvelte2TsxComponent",
+        );
+      lines.push(tsxResult);
+
+      // Compile SSR code.
+      // Reference:
+      // - https://svelte.dev/docs/svelte-compiler#types-compileoptions
+      // TODO:
+      // - Log compile result stats.
+      // - Log compile result warnings.
       const { code } = await preprocess(
         source,
-        [
-          svelte_preprocess(),
-        ],
+        [svelte_preprocess()],
         {
           filename: entryPoint,
         },
       );
-
-      // https://svelte.dev/docs/svelte-compiler#types-compileoptions
-      const outputFileJS = entryPoint.replace(/\.svelte$/, "/main.js");
-      const result = compile(code, options.compileOptions);
-      Deno.mkdirSync(outputFileJS.replace(/\/[^\/]+$/, ""), {
-        recursive: true,
+      const ssrResult = compile(code, {
+        ...options.compileOptions,
+        generate: "ssr",
       });
-      Deno.writeTextFileSync(outputFileJS, result.js.code);
+      const ssrJSResult = ssrResult.js.code;
+      // const ssrCSSResult = ssrResult.css.code;
+      lines.push(ssrJSResult);
 
-      // https://github.com/sveltejs/language-tools/tree/master/packages/svelte2tsx#readme
-      const outputFileTS = entryPoint.replace(/\.svelte$/, "/main.ts");
-      const tsxResult = svelte2tsx(source);
-      Deno.mkdirSync(outputFileTS.replace(/\/[^\/]+$/, ""), {
-        recursive: true,
-      });
-      Deno.writeTextFileSync(
-        outputFileTS,
-        tsxResult.code.replace(
-          /^\/\/\/\<reference types="svelte" \/>/,
-          `///<reference types="npm:svelte2tsx@0.6.23/svelte-shims.d.ts" />`,
-        ),
-      );
+      // Compile client code.
+      // const csrResult = compile(code, {
+      //   ...options.compileOptions,
+      //   generate: "dom",
+      // });
+      // const csrJSResult = csrResult.js.code;
+      // const csrCSSResult = csrResult.css.code;
+
+      const outputFilePath = entryPoint.replace(/\.svelte$/, ".svelte.ts");
+      const result = lines.join("\n");
+      Deno.writeTextFileSync(outputFilePath, result);
+
       return result;
     }),
   );

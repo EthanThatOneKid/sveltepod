@@ -4,6 +4,9 @@
     "udd": "deno run -r -A https://deno.land/x/udd/main.ts deps.ts && deno task lock",
     "lock": "deno cache --lock=deno.lock --lock-write deps.ts",
     "all": "deno task udd && deno lint && deno fmt",
-    "example:minimal": "deno run -A sveltepod.ts examples/minimal/hello-world.svelte"
+    "example:minimal": "deno run -A examples/minimal/build.ts"
+  },
+  "imports": {
+    "sveltepod/": "./"
   }
 }
