@@ -11,15 +11,15 @@ import {
 } from "./deps.ts";
 
 if (import.meta.main) {
-  await sveltepod(parseSveltepodOptions(Deno.args));
+  await sveltepod(fromArgs(Deno.args));
   Deno.exit(0);
 }
 
 /**
- * parseSveltepodOptions parses the options for the sveltepod function from
+ * fromArgs parses the options for the sveltepod function from
  * the given args.
  */
-export function parseSveltepodOptions(args: string[]): SveltepodOptions {
+export function fromArgs(args: string[]): SveltepodOptions {
   const flags = parse(args);
   const entryPoints = flags._
     .reduce<string[]>((entryPoints, entryPoint) => {
