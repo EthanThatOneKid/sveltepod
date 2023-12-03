@@ -6,8 +6,10 @@ import {
   // esbuild_svelte,
   parse,
   preprocess,
+  Project,
   svelte2tsx,
   svelte_preprocess,
+  transform,
 } from "./deps.ts";
 
 if (import.meta.main) {
@@ -45,45 +47,32 @@ export interface SveltepodOptions {
   entryPoints: string[];
 
   /**
+   * imports is the map of import path prefixes to replace
+   * with target import map prefixes.
+   */
+  imports?: Record<string, string>;
+
+  /**
    * compileOptions are the options for the Svelte compiler.
    */
   compileOptions?: CompileOptions;
-
-  // TODO: Add generation output configuration.
-
-  svelte2tsxPath?: string;
 }
+
+// TODO: Reference
+// https://github.com/sveltejs/kit/blob/98e4b8f059d09d57f66a8b513d809867419cc071/packages/package/src/index.js#L196
 
 /**
  * sveltepod builds the given entry points.
  */
 export async function sveltepod(options: SveltepodOptions) {
-  // const sveltePath = options.sveltePath ?? "svelte";
+  const project = new Project({ useInMemoryFileSystem: true });
   const results = await Promise.all(
     options.entryPoints.map(async (entryPoint) => {
+      const outputFilePath = replaceSvelteExtension(entryPoint);
+      const outputFile = project.createSourceFile(outputFilePath);
+
       // Read the source code.
       const source = Deno.readTextFileSync(entryPoint);
-
-      // Generate the TypeScript code.
-      const lines: string[] = [];
-
-      // Generate component types.
-      // Reference:
-      // - https://github.com/sveltejs/language-tools/tree/3dc6ede879be9f36eda2f023c3c53c55df631e3a/packages/svelte2tsx#:~:text=The%20TSX%20can%20be%20type%20checked%20using%20the%20included%20svelte%2Djsx.d.ts%20and%20svelte%2Dshims.d.ts.
-      const svelte2tsxPath = options.svelte2tsxPath ?? "npm:svelte2tsx@0.6.23";
-      const tsxResult = svelte2tsx(source)
-        .code
-        .replace(
-          /^\/\/\/\<reference types="svelte" \/>/,
-          ["/svelte-jsx.d.ts", "/svelte-shims.d.ts"]
-            .map((path) => `import "${svelte2tsxPath}${path}";`)
-            .join("\n"),
-        )
-        .replace(
-          /export default class extends __sveltets_2_createSvelte2TsxComponent/,
-          "export class TsxComponent extends __sveltets_2_createSvelte2TsxComponent",
-        );
-      lines.push(tsxResult);
 
       // Compile SSR code.
       // Reference:
@@ -91,20 +80,44 @@ export async function sveltepod(options: SveltepodOptions) {
       // TODO:
       // - Log compile result stats.
       // - Log compile result warnings.
-      const { code } = await preprocess(
+      const preprocessResult = await preprocess(
         source,
-        [svelte_preprocess()],
+        [
+          {
+            markup: (markupCtx) => {
+              console.log(JSON.stringify({ markupCtx }, null, 2));
+            },
+            script: (scriptCtx) => {
+              console.log(JSON.stringify({ scriptCtx }, null, 2));
+            },
+            style: (styleCtx) => {
+              console.log(JSON.stringify({ styleCtx }, null, 2));
+            },
+          },
+          svelte_preprocess(),
+        ],
         {
           filename: entryPoint,
         },
       );
-      const ssrResult = compile(code, {
-        ...options.compileOptions,
-        generate: "ssr",
-      });
-      const ssrJSResult = ssrResult.js.code;
-      // const ssrCSSResult = ssrResult.css.code;
-      lines.push(ssrJSResult);
+
+      // Compile Svelte code.
+      const compileResult = compile(
+        preprocessResult.code,
+        options.compileOptions,
+      );
+      outputFile.addStatements(compileResult.js.code);
+
+      // Replace import path prefixes.
+      const importDeclarations = outputFile.getImportDeclarations();
+      for (const importDeclaration of importDeclarations) {
+        const originalModuleSpecifier = importDeclaration.getModuleSpecifier()
+          .getLiteralValue();
+        const replacementModuleSpecifier = replaceSvelteExtension(
+          resolveImport(originalModuleSpecifier, options.imports),
+        );
+        importDeclaration.setModuleSpecifier(replacementModuleSpecifier);
+      }
 
       // Compile client code.
       // const csrResult = compile(code, {
@@ -114,14 +127,41 @@ export async function sveltepod(options: SveltepodOptions) {
       // const csrJSResult = csrResult.js.code;
       // const csrCSSResult = csrResult.css.code;
 
-      const outputFilePath = entryPoint.replace(/\.svelte$/, ".svelte.ts");
-      const result = lines.join("\n");
-      Deno.writeTextFileSync(outputFilePath, result);
+      // let result = lines.join("\n");
+      // if (options.imports) {
+      //   result = replaceImportPathPrefixes(result, options.imports);
+      // }
 
-      return result;
+      console.log(JSON.stringify(compileResult, null, 2));
+      return compileResult.js.code;
     }),
   );
 
-  console.info(results);
+  const cwd = Deno.cwd();
+  for (const sourceFile of project.getSourceFiles()) {
+    const fullText = sourceFile.getFullText();
+    Deno.mkdirSync(cwd + sourceFile.getDirectoryPath(), { recursive: true });
+    Deno.writeTextFileSync(cwd + sourceFile.getFilePath(), fullText);
+  }
+
   return results;
+}
+
+function resolveImport(
+  specifier: string,
+  imports?: Record<string, string>,
+): string {
+  if (imports !== undefined) {
+    for (const [prefix, replacement] of Object.entries(imports)) {
+      if (specifier.startsWith(prefix)) {
+        return replacement + specifier.slice(prefix.length);
+      }
+    }
+  }
+
+  return specifier;
+}
+
+function replaceSvelteExtension(path: string): string {
+  return path.replace(/\.svelte$/, ".svelte.ts");
 }

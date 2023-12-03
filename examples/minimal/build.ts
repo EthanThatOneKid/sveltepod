@@ -4,10 +4,17 @@ import { sveltepod } from "sveltepod/mod.ts";
 
 if (import.meta.main) {
   await sveltepod({
-    entryPoints: ["examples/minimal/hello-world.svelte"],
+    entryPoints: [
+      "./examples/minimal/index.svelte",
+    ],
+    imports: {
+      "svelte": "npm:svelte@5.0.0-next.17",
+    },
     compileOptions: {
-      generate: "ssr",
-      sveltePath: "npm:svelte@4.2.1",
+      generate: "server" as "ssr",
+      css: "external",
+      name: "Index",
+      accessors: true,
     },
   });
   Deno.exit(0);
