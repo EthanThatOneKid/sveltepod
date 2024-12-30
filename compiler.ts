@@ -18,23 +18,23 @@ if (import.meta.main) {
   const sourceCode = await Deno.readTextFile("./testdata/props.svelte");
   const svelte2tsxResult = svelte2tsx(sourceCode);
   const svelteResult = compile(sourceCode);
-  const resultString = provideComponentProps(
+  const resultString = modifyComponentProps(
     svelteResult.js.code,
-    getComponentProps(svelte2tsxResult.code) ?? "unknown",
+    getComponentPropsTypeString(svelte2tsxResult.code) ?? "unknown",
   );
   await Deno.writeTextFile("./testdata/props.ts", resultString);
 }
 
-function getComponentProps(sourceCode: string): string | undefined {
+function getComponentPropsTypeString(sourceCode: string): string | undefined {
   const inMemoryProject = new Project({ useInMemoryFileSystem: true });
   const sourceFile = inMemoryProject.createSourceFile("", sourceCode);
   const componentPropsNode = sourceFile.getTypeAlias("$$ComponentProps");
   return componentPropsNode?.getTypeNode()?.getText();
 }
 
-function provideComponentProps(code: string, props: string): string {
+function modifyComponentProps(code: string, propsTypeString: string): string {
   return code.replace(
     ", $$props",
-    `, ${"$$".repeat(2)}props: ${props}`,
+    `, ${"$$".repeat(2)}props: ${propsTypeString}`,
   );
 }
