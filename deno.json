@@ -1,0 +1,10 @@
+{
+  "lock": false,
+  "name": "@sveltepod/compiler",
+  "exports": "./mod.ts",
+  "imports": {
+    "svelte": "npm:svelte@^5.16.0",
+    "svelte2tsx": "npm:svelte2tsx@^0.7.31",
+    "ts-morph": "npm:ts-morph@^24.0.0"
+  }
+}
