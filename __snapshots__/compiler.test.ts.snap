@@ -1,0 +1,2969 @@
+export const snapshot = {};
+
+snapshot[`compile > \$store-assign 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	var \$\$store_subs;
+	const store = writable([]);
+
+	\$.store_mutate(\$\$store_subs ??= {}, "\$store", store, \$.store_get(\$\$store_subs ??= {}, "\$store", store)[1] = true);
+	\$.store_mutate(\$\$store_subs ??= {}, "\$store", store, \$.store_get(\$\$store_subs ??= {}, "\$store", store).foo = true);
+	\$.store_mutate(\$\$store_subs ??= {}, "\$store", store, \$.store_get(\$\$store_subs ??= {}, "\$store", store)[1] = true);
+	\$.store_mutate(\$\$store_subs ??= {}, "\$store", store, \$.store_get(\$\$store_subs ??= {}, "\$store", store).foo = true);
+	\$.store_set(store, true);
+	\$.store_set(store, true);
+	hello[\$.store_get(\$\$store_subs ??= {}, "\$store", store)] = true;
+
+	(
+		\$.store_set(store, true),
+		\$.store_set(store, false),
+		\$.store_get(\$\$store_subs ??= {}, "\$store", store),
+		\$.store_mutate(\$\$store_subs ??= {}, "\$store", store, \$.store_get(\$\$store_subs ??= {}, "\$store", store).a = true)
+	);
+
+	(
+		\$.store_mutate(\$\$store_subs ??= {}, "\$store", store, \$.store_get(\$\$store_subs ??= {}, "\$store", store).a = true),
+		\$.store_mutate(\$\$store_subs ??= {}, "\$store", store, \$.store_get(\$\$store_subs ??= {}, "\$store", store).b = false)
+	);
+
+	if (\$\$store_subs) \$.unsubscribe_stores(\$\$store_subs);
+}'
+`;
+
+snapshot[`compile > \$store-no-instance-only-module-script 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { store1 } from './somewhere';
+
+const store2 = '';
+
+export default function _unknown_(\$\$payload) {
+	var \$\$store_subs;
+
+	\$\$payload.out += \`<!---->\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store1\\", store1))}\\r
+\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store2\\", store2))}\`;
+
+	if (\$\$store_subs) \$.unsubscribe_stores(\$\$store_subs);
+}"
+`;
+
+snapshot[`compile > \$store-prop-init 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	var \$\$store_subs;
+	let store = null;
+
+	const foo = {
+		\$store: \$.store_get(\$\$store_subs ??= {}, "\$store", store)
+	};
+
+	const bar = {
+		\$store: \$.store_get(\$\$store_subs ??= {}, "\$store", store)
+	};
+
+	if (\$\$store_subs) \$.unsubscribe_stores(\$\$store_subs);
+}'
+`;
+
+snapshot[`compile > accessors-config-attr-false 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let foo = \$.fallback(\$\$props["foo"], undefined);
+
+	\$.bind_props(\$\$props, { foo });
+}'
+`;
+
+snapshot[`compile > accessors-config 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let foo = \$.fallback(\$\$props["foo"], undefined);
+
+	\$.bind_props(\$\$props, { foo });
+}'
+`;
+
+snapshot[`compile > array-binding-export 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let tmp = [1, 2, 3],
+		a = \$.fallback(\$\$props["a"], () => tmp[0], true),
+		b = \$.fallback(\$\$props["b"], () => tmp[1], true),
+		c = \$.fallback(\$\$props["c"], () => tmp[2], true);
+
+	\$.bind_props(\$\$props, { a, b, c });
+}'
+`;
+
+snapshot[`compile > attributes-foreign-ns 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	\$\$payload.out += \`<element someAttr="hi" someOtherAttribute="there">hello</element> \`;
+	Component(\$\$payload, { someAttr: "5", otherAttr: 6 });
+	\$\$payload.out += \`<!---->\`;
+}'
+`;
+
+snapshot[`compile > await-with-\$store 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { readable } from 'svelte/store';
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	var \$\$store_subs;
+	const store = readable(Promise.resolve('test'), () => {});
+
+	\$\$payload.out += \`<!---->\`;
+
+	\$.await(
+		\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store),
+		() => {
+			\$\$payload.out += \`<p>loading</p>\`;
+		},
+		(data) => {
+			\$\$payload.out += \`\${\$.escape(data)}\`;
+		},
+		() => {}
+	);
+
+	\$\$payload.out += \`<!---->\`;
+	if (\$\$store_subs) \$.unsubscribe_stores(\$\$store_subs);
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > circle-drawer-example 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+
+export default function _unknown_(\$\$payload) {
+	let i = 0;
+	let undoStack = [[]];
+	let circles = [];
+	let selected;
+	let adjusting = false;
+	let adjusted = false;
+
+	function handleClick(event) {
+		if (adjusting) {
+			adjusting = false;
+			// if circle was adjusted,
+			// push to the stack
+			if (adjusted) push();
+			return;
+		}
+
+		const circle = { cx: event.clientX, cy: event.clientY, r: 50 };
+
+		circles = circles.concat(circle);
+		selected = circle;
+		push();
+	}
+
+	function adjust(event) {
+		selected.r = +event.target.value;
+		circles = circles;
+		adjusted = true;
+	}
+
+	function select(circle, event) {
+		if (!adjusting) {
+			event.stopPropagation();
+			selected = circle;
+		}
+	}
+
+	function push() {
+		const newUndoStack = undoStack.slice(0, ++i);
+
+		newUndoStack.push(clone(circles));
+		undoStack = newUndoStack;
+	}
+
+	function travel(d) {
+		circles = clone(undoStack[i += d]);
+		adjusting = false;
+	}
+
+	function clone(circles) {
+		return circles.map(({ cx, cy, r }) => ({ cx, cy, r }));
+	}
+
+	const each_array = \$.ensure_array_like(circles);
+
+	\$\$payload.out += \`<div class=\\"controls svelte-lk1l0l\\"><button\${\$.attr(\\"disabled\\", i === 0, true)}>undo</button> <button\${\$.attr(\\"disabled\\", i === undoStack.length - 1, true)}>redo</button></div> <svg class=\\"svelte-lk1l0l\\"><!--[-->\`;
+
+	for (let \$\$index = 0, \$\$length = each_array.length; \$\$index < \$\$length; \$\$index++) {
+		let circle = each_array[\$\$index];
+
+		\$\$payload.out += \`<circle\${\$.attr(\\"cx\\", circle.cx)}\${\$.attr(\\"cy\\", circle.cy)}\${\$.attr(\\"r\\", circle.r)}\${\$.attr(\\"fill\\", circle === selected ? '#ccc' : 'white')} class=\\"svelte-lk1l0l\\"></circle>\`;
+	}
+
+	\$\$payload.out += \`<!--]--></svg> \`;
+
+	if (adjusting) {
+		\$\$payload.out += \\"<!--[-->\\";
+		\$\$payload.out += \`<div class=\\"adjuster svelte-lk1l0l\\"><p>adjust diameter of circle at \${\$.escape(selected.cx)}, \${\$.escape(selected.cy)}</p> <input type=\\"range\\"\${\$.attr(\\"value\\", selected.r)} class=\\"svelte-lk1l0l\\"></div>\`;
+	} else {
+		\$\$payload.out += \\"<!--[!-->\\";
+	}
+
+	\$\$payload.out += \`<!--]-->\`;
+}"
+`;
+
+snapshot[`compile > commented-out-script 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {}'
+`;
+
+snapshot[`compile > component-default-slot 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let b = 7;
+
+	\$\$payload.out += \`<div><!---->\`;
+
+	\$.slot(\$\$payload, \$\$props, "default", { a: b }, () => {
+		\$\$payload.out += \`Hello\`;
+	});
+
+	\$\$payload.out += \`<!----></div>\`;
+}'
+`;
+
+snapshot[`compile > component-events-interface-constant 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	const A = 'a';
+	const B = 'b', C = 'c';
+}\`
+`;
+
+snapshot[`compile > component-events-interface-dispatcher 1`] = `
+\`import * as \$ from "svelte/internal/server";
+import { createEventDispatcher } from 'svelte';
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	const dispatch = createEventDispatcher();
+
+	\$.pop();
+}\`
+`;
+
+snapshot[`compile > component-events-interface-string-literals 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	
+}'
+`;
+
+snapshot[`compile > component-events-interface 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	
+}'
+`;
+
+snapshot[`compile > component-events-strictEvents 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { createEventDispatcher } from 'svelte';
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	const dispatch = createEventDispatcher();
+
+	dispatch('foo');
+	\$\$payload.out += \`<button>d</button>\`;
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > component-events-type 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	
+}'
+`;
+
+snapshot[`compile > component-multiple-slots 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let b = 7;
+	let d = 5;
+	let e = 5;
+
+	\$\$payload.out += \`<div><!---->\`;
+
+	\$.slot(\$\$payload, \$\$props, "default", { a: b }, () => {
+		\$\$payload.out += \`Hello\`;
+	});
+
+	\$\$payload.out += \`<!----> <!---->\`;
+	\$.slot(\$\$payload, \$\$props, "test", { c: d, e }, null);
+	\$\$payload.out += \`<!----> <!---->\`;
+	\$.slot(\$\$payload, \$\$props, "abc-cde.113", {}, null);
+	\$\$payload.out += \`<!----></div>\`;
+}'
+`;
+
+snapshot[`compile > component-slot-\$\$slot-interface 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let b = 7;
+
+	\$\$payload.out += \`<div><!---->\`;
+	\$.slot(\$\$payload, \$\$props, "default", { a: b }, null);
+	\$\$payload.out += \`<!----> <!---->\`;
+	\$.slot(\$\$payload, \$\$props, "foo", { b }, null);
+	\$\$payload.out += \`<!----></div>\`;
+}'
+`;
+
+snapshot[`compile > component-slot-\$\$slot-type 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let b = 7;
+
+	\$\$payload.out += \`<div><!---->\`;
+	\$.slot(\$\$payload, \$\$props, "default", { a: b }, null);
+	\$\$payload.out += \`<!----> <!---->\`;
+	\$.slot(\$\$payload, \$\$props, "foo", { b }, null);
+	\$\$payload.out += \`<!----></div>\`;
+}'
+`;
+
+snapshot[`compile > component-slot-crazy-attributes 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let b = 7;
+
+	\$\$payload.out += \`<div><!---->\`;
+
+	\$.slot(
+		\$\$payload,
+		\$\$props,
+		"default",
+		{
+			a: b,
+			b,
+			c: "b",
+			d: \`a\${\$.stringify(b)}\`,
+			e: b
+		},
+		() => {
+			\$\$payload.out += \`Hello\`;
+		}
+	);
+
+	\$\$payload.out += \`<!----></div>\`;
+}'
+`;
+
+snapshot[`compile > component-slot-fallback 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$\$payload.out += \`<!---->\`;
+
+	\$.slot(\$\$payload, \$\$props, "default", {}, () => {
+		\$\$payload.out += \`<div>fallback content</div>\`;
+	});
+
+	\$\$payload.out += \`<!----> <!---->\`;
+
+	\$.slot(\$\$payload, \$\$props, "foo", { bar, baz: "boo" }, () => {
+		\$\$payload.out += \`<p>fallback</p>\`;
+	});
+
+	\$\$payload.out += \`<!---->\`;
+}'
+`;
+
+snapshot[`compile > component-slot-forward-with-props 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	Parent(\$\$payload, {
+		propA: true,
+		propB,
+		propC: "val1",
+		propD: "val2",
+		propE: \`a\${\$.stringify(a)}b\${\$.stringify(b)}\`,
+		children: \$.invalid_default_snippet,
+		\$\$slots: {
+			default: (\$\$payload, { foo }) => {
+				\$\$payload.out += \`<!---->\`;
+				\$.slot(\$\$payload, \$\$props, "default", { foo }, null);
+				\$\$payload.out += \`<!---->\`;
+			}
+		}
+	});
+}'
+`;
+
+snapshot[`compile > component-slot-inside-await 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$\$payload.out += \`<!---->\`;
+
+	\$.await(
+		promise,
+		() => {},
+		(value) => {
+			\$\$payload.out += \`<!---->\`;
+
+			\$.slot(\$\$payload, \$\$props, "default", { a: value }, () => {
+				\$\$payload.out += \`Hello\`;
+			});
+
+			\$\$payload.out += \`<!---->\`;
+		},
+		(err) => {
+			\$\$payload.out += \`<!---->\`;
+
+			\$.slot(\$\$payload, \$\$props, "err", { err }, () => {
+				\$\$payload.out += \`Hello\`;
+			});
+
+			\$\$payload.out += \`<!---->\`;
+		}
+	);
+
+	\$\$payload.out += \`<!----> <!---->\`;
+
+	\$.await(
+		promise2,
+		() => {},
+		({ b }) => {
+			\$\$payload.out += \`<!---->\`;
+
+			\$.slot(\$\$payload, \$\$props, "second", { a: b }, () => {
+				\$\$payload.out += \`Hello\`;
+			});
+
+			\$\$payload.out += \`<!---->\`;
+		},
+		() => {}
+	);
+
+	\$\$payload.out += \`<!---->\`;
+}'
+`;
+
+snapshot[`compile > component-slot-inside-each 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	const each_array = \$.ensure_array_like(items);
+	const each_array_1 = \$.ensure_array_like(items2);
+
+	\$\$payload.out += \`<!--[-->\`;
+
+	for (let \$\$index = 0, \$\$length = each_array.length; \$\$index < \$\$length; \$\$index++) {
+		let item = each_array[\$\$index];
+
+		\$\$payload.out += \`<!---->\`;
+
+		\$.slot(\$\$payload, \$\$props, "default", { a: item }, () => {
+			\$\$payload.out += \`Hello\`;
+		});
+
+		\$\$payload.out += \`<!---->\`;
+	}
+
+	\$\$payload.out += \`<!--]--> <!--[-->\`;
+
+	for (let \$\$index_1 = 0,
+		\$\$length = each_array_1.length; \$\$index_1 < \$\$length; \$\$index_1++) {
+		let { a } = each_array_1[\$\$index_1];
+
+		\$\$payload.out += \`<!---->\`;
+
+		\$.slot(\$\$payload, \$\$props, "second", { a }, () => {
+			\$\$payload.out += \`Hello\`;
+		});
+
+		\$\$payload.out += \`<!---->\`;
+	}
+
+	\$\$payload.out += \`<!--]-->\`;
+}'
+`;
+
+snapshot[`compile > component-slot-let-forward-named-slot 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	Component(\$\$payload, {
+		\$\$slots: {
+			b: (\$\$payload, { a }) => {
+				\$\$payload.out += \`<div slot="b"><!---->\`;
+				\$.slot(\$\$payload, \$\$props, "default", { a }, null);
+				\$\$payload.out += \`<!----></div>\`;
+			}
+		}
+	});
+}'
+`;
+
+snapshot[`compile > component-slot-let-forward 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	Component(\$\$payload, {
+		children: \$.invalid_default_snippet,
+		\$\$slots: {
+			default: (
+				\$\$payload,
+				{ name: n, thing, whatever: { bla } }
+			) => {
+				\$\$payload.out += \`<!---->\`;
+				\$.slot(\$\$payload, \$\$props, "default", { n, thing, bla }, null);
+				\$\$payload.out += \`<!---->\`;
+			}
+		}
+	});
+}'
+`;
+
+snapshot[`compile > component-slot-nest-scope 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	const each_array = \$.ensure_array_like(items);
+
+	\$\$payload.out += \`<!--[-->\`;
+
+	for (let \$\$index_1 = 0, \$\$length = each_array.length; \$\$index_1 < \$\$length; \$\$index_1++) {
+		let item = each_array[\$\$index_1];
+		const each_array_1 = \$.ensure_array_like(item);
+
+		\$\$payload.out += \`<!--[-->\`;
+
+		for (let \$\$index = 0, \$\$length = each_array_1.length; \$\$index < \$\$length; \$\$index++) {
+			let { a } = each_array_1[\$\$index];
+
+			\$\$payload.out += \`<!---->\`;
+
+			\$.slot(\$\$payload, \$\$props, "default", { a }, () => {
+				\$\$payload.out += \`Hello\`;
+			});
+
+			\$\$payload.out += \`<!---->\`;
+		}
+
+		\$\$payload.out += \`<!--]--> <!---->\`;
+		\$.slot(\$\$payload, \$\$props, "second", { a }, null);
+		\$\$payload.out += \`<!---->\`;
+	}
+
+	\$\$payload.out += \`<!--]--> \`;
+
+	Component(\$\$payload, {
+		children: \$.invalid_default_snippet,
+		\$\$slots: {
+			default: (\$\$payload, { c }) => {
+				\$\$payload.out += \`<!---->\${\$.escape(c)}\`;
+			}
+		}
+	});
+
+	\$\$payload.out += \`<!----> <!---->\`;
+
+	\$.await(
+		promise,
+		() => {},
+		(d) => {
+			\$\$payload.out += \`\${\$.escape(d)}\`;
+		},
+		() => {}
+	);
+
+	\$\$payload.out += \`<!----> <!---->\`;
+	\$.slot(\$\$payload, \$\$props, "third", { d, c }, null);
+	\$\$payload.out += \`<!---->\`;
+}'
+`;
+
+snapshot[`compile > component-slot-no-space 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import Test from './Test.svelte';
+
+export default function _unknown_(\$\$payload) {
+	\$\$payload.out += \`<div>\`;
+
+	Test(\$\$payload, {
+		children: \$.invalid_default_snippet,
+		\$\$slots: {
+			default: (\$\$payload, { t }) => {
+				\$\$payload.out += \`<!---->xx\`;
+			}
+		}
+	});
+
+	\$\$payload.out += \`<!----></div>\`;
+}"
+`;
+
+snapshot[`compile > component-slot-var-shadowing 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	const each_array = \$.ensure_array_like(items);
+
+	\$\$payload.out += \`<!--[-->\`;
+
+	for (let \$\$index = 0, \$\$length = each_array.length; \$\$index < \$\$length; \$\$index++) {
+		let items = each_array[\$\$index];
+
+		\$\$payload.out += \`<!---->\`;
+
+		\$.slot(\$\$payload, \$\$props, "default", { a: items }, () => {
+			\$\$payload.out += \`Hello\`;
+		});
+
+		\$\$payload.out += \`<!---->\`;
+	}
+
+	\$\$payload.out += \`<!--]-->\`;
+}'
+`;
+
+snapshot[`compile > component-with-documentation 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	\$\$payload.out += \`<main>At least I am documented</main>\`;
+}'
+`;
+
+snapshot[`compile > component-with-indented-multiline-documentation 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	\$\$payload.out += \`<main>At least I am documented</main>\`;
+}'
+`;
+
+snapshot[`compile > component-with-multiline-documentation 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	\$\$payload.out += \`<main>At least I am documented</main>\`;
+}'
+`;
+
+snapshot[`compile > const-tag-await-then-destructuring 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let promise1 = \$.fallback(\$\$props["promise1"], () => ({ width: 3, height: 4 }), true);
+	let promise2 = \$.fallback(\$\$props["promise2"], () => ({ width: 5, height: 7 }), true);
+	let constant = \$.fallback(\$\$props["constant"], 10);
+
+	function calculate(width, height, constant) {
+		return {
+			area: width * height,
+			volume: width * height * constant
+		};
+	}
+
+	\$\$payload.out += \`<!---->\`;
+
+	\$.await(
+		promise1,
+		() => {},
+		({ width, height }) => {
+			const { area, volume } = calculate(width, height, constant);
+			const perimeter = (width + height) * constant;
+
+			const [_width, _height, sum] = [
+				width * constant,
+				height,
+				width * constant + height
+			];
+
+			\$\$payload.out += \`<div>\${\$.escape(area)} \${\$.escape(volume)} \${\$.escape(perimeter)}, \${\$.escape(_width)}+\${\$.escape(_height)}=\${\$.escape(sum)}</div>\`;
+		},
+		() => {}
+	);
+
+	\$\$payload.out += \`<!----> <!---->\`;
+
+	\$.await(promise2, () => {}, () => {}, ({ width, height }) => {
+		const { area, volume } = calculate(width, height, constant);
+		const perimeter = (width + height) * constant;
+
+		const [_width, _height, sum] = [
+			width * constant,
+			height,
+			width * constant + height
+		];
+
+		\$\$payload.out += \`<div>\${\$.escape(area)} \${\$.escape(volume)} \${\$.escape(perimeter)}, \${\$.escape(_width)}+\${\$.escape(_height)}=\${\$.escape(sum)}</div>\`;
+	});
+
+	\$\$payload.out += \`<!---->\`;
+	\$.bind_props(\$\$props, { promise1, promise2, constant });
+}'
+`;
+
+snapshot[`compile > const-tag-await-then 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let promise1 = \$.fallback(\$\$props["promise1"], () => ({ width: 3, height: 4 }), true);
+	let promise2 = \$.fallback(\$\$props["promise2"], () => ({ width: 5, height: 7 }), true);
+	let constant = \$.fallback(\$\$props["constant"], 10);
+
+	function calculate(width, height, constant) {
+		return {
+			area: width * height,
+			volume: width * height * constant
+		};
+	}
+
+	\$\$payload.out += \`<!---->\`;
+
+	\$.await(
+		promise1,
+		() => {},
+		(box) => {
+			const { area, volume } = calculate(box.width, box.height, constant);
+			const perimeter = (box.width + box.height) * constant;
+
+			const [width, height, sum] = [
+				box.width * constant,
+				box.height,
+				box.width * constant + box.height
+			];
+
+			\$\$payload.out += \`<div>\${\$.escape(area)} \${\$.escape(volume)} \${\$.escape(perimeter)}, \${\$.escape(width)}+\${\$.escape(height)}=\${\$.escape(sum)}</div>\`;
+		},
+		() => {}
+	);
+
+	\$\$payload.out += \`<!----> <!---->\`;
+
+	\$.await(promise2, () => {}, () => {}, (box) => {
+		const { area, volume } = calculate(box.width, box.height, constant);
+		const perimeter = (box.width + box.height) * constant;
+
+		const [width, height, sum] = [
+			box.width * constant,
+			box.height,
+			box.width * constant + box.height
+		];
+
+		\$\$payload.out += \`<div>\${\$.escape(area)} \${\$.escape(volume)} \${\$.escape(perimeter)}, \${\$.escape(width)}+\${\$.escape(height)}=\${\$.escape(sum)}</div>\`;
+	});
+
+	\$\$payload.out += \`<!---->\`;
+	\$.bind_props(\$\$props, { promise1, promise2, constant });
+}'
+`;
+
+snapshot[`compile > const-tag-component 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import Component from './Component.svelte';
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let box = \$.fallback(\$\$props[\\"box\\"], () => ({ width: 3, height: 4 }), true);
+	let constant = \$.fallback(\$\$props[\\"constant\\"], 10);
+
+	function calculate(width, height, constant) {
+		return {
+			area: width * height,
+			volume: width * height * constant
+		};
+	}
+
+	Component(\$\$payload, {
+		box,
+		children: \$.invalid_default_snippet,
+		\$\$slots: {
+			default: (\$\$payload, { box: { width, height } }) => {
+				{
+					const { area, volume } = calculate(width, height, constant);
+					const perimeter = (width + height) * constant;
+
+					const [_width, _height, sum] = [
+						width * constant,
+						height,
+						width * constant + height
+					];
+
+					\$\$payload.out += \`<div>\${\$.escape(area)} \${\$.escape(volume)} \${\$.escape(perimeter)}, \${\$.escape(_width)}+\${\$.escape(_height)}=\${\$.escape(sum)}</div>\`;
+				}
+			},
+			box1: (\$\$payload, { box }) => {
+				{
+					const { area, volume } = calculate(box.width, box.height, constant);
+					const perimeter = (box.width + box.height) * constant;
+
+					const [width, height, sum] = [
+						box.width * constant,
+						box.height,
+						box.width * constant + box.height
+					];
+
+					\$\$payload.out += \`<div>\${\$.escape(area)} \${\$.escape(volume)} \${\$.escape(perimeter)}, \${\$.escape(width)}+\${\$.escape(height)}=\${\$.escape(sum)}</div>\`;
+				}
+			},
+			box2: (\$\$payload, { width, height }) => {
+				{
+					const { area, volume } = calculate(width, height, constant);
+					const perimeter = (width + height) * constant;
+
+					const [_width, _height, sum] = [
+						width * constant,
+						height,
+						width * constant + height
+					];
+
+					\$\$payload.out += \`<div>\${\$.escape(area)} \${\$.escape(volume)} \${\$.escape(perimeter)}, \${\$.escape(_width)}+\${\$.escape(_height)}=\${\$.escape(sum)}</div>\`;
+				}
+			}
+		}
+	});
+
+	\$\$payload.out += \`<!----> \`;
+
+	Component(\$\$payload, {
+		box,
+		children: \$.invalid_default_snippet,
+		\$\$slots: {
+			default: (\$\$payload, { box }) => {
+				const { area, volume } = calculate(box.width, box.height, constant);
+				const perimeter = (box.width + box.height) * constant;
+
+				const [width, height, sum] = [
+					box.width * constant,
+					box.height,
+					box.width * constant + box.height
+				];
+
+				\$\$payload.out += \`<div>\${\$.escape(area)} \${\$.escape(volume)} \${\$.escape(perimeter)}, \${\$.escape(width)}+\${\$.escape(height)}=\${\$.escape(sum)}</div>\`;
+			},
+			box1: (\$\$payload, { box }) => {
+				const { area, volume } = calculate(box.width, box.height, constant);
+				const perimeter = (box.width + box.height) * constant;
+
+				const [width, height, sum] = [
+					box.width * constant,
+					box.height,
+					box.width * constant + box.height
+				];
+
+				\$\$payload.out += \`<div slot=\\"box1\\"><div>\${\$.escape(area)} \${\$.escape(volume)} \${\$.escape(perimeter)}, \${\$.escape(width)}+\${\$.escape(height)}=\${\$.escape(sum)}</div></div>\`;
+			},
+			box2: (\$\$payload, { width, height }) => {
+				const { area, volume } = calculate(width, height, constant);
+				const perimeter = (width + height) * constant;
+
+				const [_width, _height, sum] = [
+					width * constant,
+					height,
+					width * constant + height
+				];
+
+				\$\$payload.out += \`<div slot=\\"box2\\"><div>\${\$.escape(area)} \${\$.escape(volume)} \${\$.escape(perimeter)}, \${\$.escape(_width)}+\${\$.escape(_height)}=\${\$.escape(sum)}</div></div>\`;
+			}
+		}
+	});
+
+	\$\$payload.out += \`<!----> \`;
+
+	Component(\$\$payload, {
+		box,
+		children: \$.invalid_default_snippet,
+		\$\$slots: {
+			default: (\$\$payload, { box: { width, height } }) => {
+				const { area, volume } = calculate(width, height, constant);
+				const perimeter = (width + height) * constant;
+
+				const [_width, _height, sum] = [
+					width * constant,
+					height,
+					width * constant + height
+				];
+
+				\$\$payload.out += \`<div>\${\$.escape(area)} \${\$.escape(volume)} \${\$.escape(perimeter)}, \${\$.escape(_width)}+\${\$.escape(_height)}=\${\$.escape(sum)}</div>\`;
+			}
+		}
+	});
+
+	\$\$payload.out += \`<!---->\`;
+	\$.bind_props(\$\$props, { box, constant });
+}"
+`;
+
+snapshot[`compile > const-tag-each-destructure 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let boxes = \$.fallback(
+		\$\$props["boxes"],
+		() => [
+			{ width: 3, height: 4 },
+			{ width: 5, height: 7 },
+			{ width: 6, height: 8 }
+		],
+		true
+	);
+
+	let constant = \$.fallback(\$\$props["constant"], 10);
+
+	function calculate(width, height, constant) {
+		return {
+			area: width * height,
+			volume: width * height * constant
+		};
+	}
+
+	const each_array = \$.ensure_array_like(boxes);
+
+	\$\$payload.out += \`<!--[-->\`;
+
+	for (let \$\$index = 0, \$\$length = each_array.length; \$\$index < \$\$length; \$\$index++) {
+		let { width, height } = each_array[\$\$index];
+		const { area, volume } = calculate(width, height, constant);
+		const perimeter = (width + height) * constant;
+
+		const [_width, _height, sum] = [
+			width * constant,
+			height,
+			width * constant + height
+		];
+
+		\$\$payload.out += \`<div>\${\$.escape(area)} \${\$.escape(volume)} \${\$.escape(perimeter)}, \${\$.escape(_width)}+\${\$.escape(_height)}=\${\$.escape(sum)}</div>\`;
+	}
+
+	\$\$payload.out += \`<!--]-->\`;
+	\$.bind_props(\$\$props, { boxes, constant });
+}'
+`;
+
+snapshot[`compile > const-tag-each 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let boxes = \$.fallback(
+		\$\$props["boxes"],
+		() => [
+			{ width: 3, height: 4 },
+			{ width: 5, height: 7 },
+			{ width: 6, height: 8 }
+		],
+		true
+	);
+
+	let constant = \$.fallback(\$\$props["constant"], 10);
+
+	function calculate(width, height, constant) {
+		return {
+			area: width * height,
+			volume: width * height * constant
+		};
+	}
+
+	const each_array = \$.ensure_array_like(boxes);
+
+	\$\$payload.out += \`<!--[-->\`;
+
+	for (let \$\$index = 0, \$\$length = each_array.length; \$\$index < \$\$length; \$\$index++) {
+		let box = each_array[\$\$index];
+		const { area, volume } = calculate(box.width, box.height, constant);
+		const perimeter = (box.width + box.height) * constant;
+
+		const [width, height, sum] = [
+			box.width * constant,
+			box.height,
+			box.width * constant + box.height
+		];
+
+		\$\$payload.out += \`<div>\${\$.escape(area)} \${\$.escape(volume)} \${\$.escape(perimeter)}, \${\$.escape(width)}+\${\$.escape(height)}=\${\$.escape(sum)}</div>\`;
+	}
+
+	\$\$payload.out += \`<!--]-->\`;
+	\$.bind_props(\$\$props, { boxes, constant });
+}'
+`;
+
+snapshot[`compile > creates-dts 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { createEventDispatcher } from 'svelte';
+
+export const foo = 'foo';
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	let bar = \$\$props[\\"bar\\"];
+	let foobar = \$.fallback(\$\$props[\\"foobar\\"], '');
+	const dispatch = createEventDispatcher();
+
+	dispatch('hi');
+	\$\$payload.out += \`<button>hi</button> <!---->\`;
+	\$.slot(\$\$payload, \$\$props, \\"default\\", { bar }, null);
+	\$\$payload.out += \`<!---->\`;
+	\$.bind_props(\$\$props, { bar, foobar });
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > creates-no-script-dts 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$\$payload.out += \`<button><!---->\`;
+	\$.slot(\$\$payload, \$\$props, "default", {}, null);
+	\$\$payload.out += \`<!----></button> <!---->\`;
+
+	\$.await(
+		Promise.resolve(0),
+		() => {},
+		(n) => {
+			\$\$payload.out += \`\${\$.escape(n)}\`;
+		},
+		() => {}
+	);
+
+	\$\$payload.out += \`<!---->\`;
+}'
+`;
+
+snapshot[`compile > empty-source 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {}'
+`;
+
+snapshot[`compile > event-and-forwarded-event 1`] = `
+'import * as \$ from "svelte/internal/server";
+import { createEventDispatcher } from "svelte";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	const dispatch = createEventDispatcher();
+
+	dispatch("mount", { input });
+	\$\$payload.out += \`<input>\`;
+	\$.pop();
+}'
+`;
+
+snapshot[`compile > event-bubble-component-multi 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	Button(\$\$payload, {});
+	\$\$payload.out += \`<!----> \`;
+	Radio(\$\$payload, {});
+	\$\$payload.out += \`<!---->\`;
+}'
+`;
+
+snapshot[`compile > event-bubble-component-with-props 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	Component(\$\$payload, {
+		propA: true,
+		propB,
+		propC: "val1",
+		propD: "val2",
+		propE: \`a\${\$.stringify(a)}b\${\$.stringify(b)}\`
+	});
+}'
+`;
+
+snapshot[`compile > event-bubble-component 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	Button(\$\$payload, {});
+}'
+`;
+
+snapshot[`compile > event-bubble-element 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	\$\$payload.out += \`<button></button>\`;
+}'
+`;
+
+snapshot[`compile > event-bubble-svelte-element 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {}'
+`;
+
+snapshot[`compile > event-dispatcher-events-alias 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { createEventDispatcher as foo, abc } from \\"svelte\\";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	const notDispatch = abc();
+	const dispatch = foo();
+
+	dispatch('hi', true);
+
+	function bye() {
+		const bla = 'bye';
+
+		dispatch(bla, false);
+	}
+
+	\$\$payload.out += \`<button></button>\`;
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > event-dispatcher-events 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { createEventDispatcher, abc } from \\"svelte\\";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	const notDispatch = abc();
+	const dispatch = createEventDispatcher();
+
+	dispatch('hi', true);
+
+	function bye() {
+		const bla = 'bye';
+
+		dispatch(bla, false);
+	}
+
+	\$\$payload.out += \`<button></button>\`;
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > event-dispatchers 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { createEventDispatcher, abc } from \\"svelte\\";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	const notDispatch = abc();
+	const dispatch1 = createEventDispatcher();
+	const dispatch2 = createEventDispatcher();
+
+	dispatch1('hi', true);
+	dispatch2('bye', true);
+	\$\$payload.out += \`<button></button>\`;
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > export-class 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	class Foo {}
+	\$.bind_props(\$\$props, { Foo });
+}'
+`;
+
+snapshot[`compile > export-const-array-destructuring 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	const array = [1, 2, 3, [4]];
+	const [a, b, c, [d]] = array;
+
+	\$.bind_props(\$\$props, { a, b, c, d });
+}'
+`;
+
+snapshot[`compile > export-const-object-destructuring 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	const obj = { a: 1, b: 2, nested: { c: 3, d: 4 } };
+	const { a, b, nested: { c, d: g } } = obj;
+
+	\$.bind_props(\$\$props, { a, b, c, g });
+}'
+`;
+
+snapshot[`compile > export-destructuring 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let tmp = c,
+		a = \$.fallback(\$\$props["a"], () => \$.fallback(tmp.a, ''), true),
+		b = \$.fallback(\$\$props["b"], () => tmp.b, true);
+
+	\$.bind_props(\$\$props, { a, b });
+}\`
+`;
+
+snapshot[`compile > export-doc 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let a = \$\$props["a"];
+	let b = \$\$props["b"];
+	let c = \$\$props["c"];
+	let d = \$\$props["d"], e = \$\$props["e"];
+
+	\$.bind_props(\$\$props, { a, b, c, d, e });
+}'
+`;
+
+snapshot[`compile > export-js-required-props 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let a = \$\$props["a"];
+	let b = \$\$props["b"];
+	let c = \$.fallback(\$\$props["c"], 123);
+
+	\$.bind_props(\$\$props, { a, b, c });
+}'
+`;
+
+snapshot[`compile > export-list-runes.v5 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let name1 = "world";
+	let name2;
+	let rename1 = '';
+	let rename2;
+
+	class Foo {}
+	function bar() {}
+
+	const baz = '';
+
+	class RenameFoo {}
+	function renamebar() {}
+
+	const renamebaz = '';
+
+	\$.bind_props(\$\$props, {
+		name1,
+		name2,
+		renamed1: rename1,
+		renamed2: rename2,
+		Foo,
+		bar,
+		baz,
+		RenamedFoo: RenameFoo,
+		renamedbar: renamebar,
+		renamedbaz: renamebaz
+	});
+}\`
+`;
+
+snapshot[`compile > export-list 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let name1 = \$.fallback(\$\$props["name1"], "world");
+	let name2 = \$\$props["name2"];
+	let rename1 = \$.fallback(\$\$props["renamed1"], '');
+	let rename2 = \$\$props["renamed2"];
+
+	class Foo {}
+	function bar() {}
+
+	const baz = '';
+
+	class RenameFoo {}
+	function renamebar() {}
+
+	const renamebaz = '';
+
+	\$.bind_props(\$\$props, {
+		name1,
+		name2,
+		renamed1: rename1,
+		renamed2: rename2,
+		Foo,
+		RenamedFoo: RenameFoo,
+		bar,
+		baz,
+		renamedbar: renamebar,
+		renamedbaz: renamebaz
+	});
+}\`
+`;
+
+snapshot[`compile > export-references-local 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let world = "world";
+	let name = \$.fallback(\$\$props["name"], world);
+
+	\$.bind_props(\$\$props, { name });
+}'
+`;
+
+snapshot[`compile > export-with-default-multi 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let name = \$.fallback(\$\$props["name"], "world"),
+		world = \$.fallback(\$\$props["world"], '');
+
+	\$.bind_props(\$\$props, { name, world });
+}\`
+`;
+
+snapshot[`compile > function-scope 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	let id;
+	let callback = (id) => undefined;
+
+	class B {
+		constructor(id) {}
+		method(id) {}
+		set id(id) {}
+	}
+
+	\$: ({ id } = { id: '' });
+}\`
+`;
+
+snapshot[`compile > generic-attribute-const-modifier 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let items = \$\$props["items"];
+
+	\$.bind_props(\$\$props, { items });
+}'
+`;
+
+snapshot[`compile > import-leading-comment 1`] = `
+\`import * as \$ from "svelte/internal/server";
+import A from './a.svelte';
+// @ts-ignore
+import B from './b.svelte';
+/*hi*/
+import C from './c.svelte';
+
+export default function _unknown_(\$\$payload) {
+	
+}\`
+`;
+
+snapshot[`compile > import-single-quote 1`] = `
+\`import * as \$ from "svelte/internal/server";
+import Test from './Test.svelte';
+
+export default function _unknown_(\$\$payload) {
+	Test(\$\$payload, { b: "6" });
+}\`
+`;
+
+snapshot[`compile > imports-module-instance 1`] = `
+\`import * as \$ from "svelte/internal/server";
+import 'svelte';
+import 'svelte/action';
+
+export default function _unknown_(\$\$payload) {
+	
+}\`
+`;
+
+snapshot[`compile > imports 1`] = `
+'import * as \$ from "svelte/internal/server";
+import { a as b } from "./test.svelte";
+import * as c from "b.ts";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let world = \$.fallback(\$\$props["world"], "name");
+
+	\$\$payload.out += \`<h1>hello \${\$.escape(world)}</h1>\`;
+	\$.bind_props(\$\$props, { world });
+}'
+`;
+
+snapshot[`compile > jsdoc-before-first-import 1`] = `
+\`import * as \$ from "svelte/internal/server";
+// non-leading comment
+/**@typedef {{ a: string }} Foo */
+import '';
+
+export default function _unknown_(\$\$payload) {
+	
+}\`
+`;
+
+snapshot[`compile > module-script-and-script-in-line2 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+let b = 5;
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let world = \$.fallback(\$\$props["world"], "name");
+
+	\$\$payload.out += \`<h1>hello \${\$.escape(world)}</h1>\`;
+	\$.bind_props(\$\$props, { world });
+}'
+`;
+
+snapshot[`compile > module-script-and-script-in-line 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+let b = 5;
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let world = \$.fallback(\$\$props["world"], "name");
+
+	\$\$payload.out += \`<h1>hello \${\$.escape(world)}</h1>\`;
+	\$.bind_props(\$\$props, { world });
+}'
+`;
+
+snapshot[`compile > module-script-and-script2 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export function preload() {}
+
+let b = 5;
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let world = \$.fallback(\$\$props["world"], "name");
+
+	\$\$payload.out += \`<h1>hello \${\$.escape(world)}</h1>\`;
+	\$.bind_props(\$\$props, { world });
+}'
+`;
+
+snapshot[`compile > module-script-and-script3.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export function preload() {}
+
+let b = 5;
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let world = \$.fallback(\$\$props["world"], "name");
+
+	\$\$payload.out += \`<h1>hello \${\$.escape(world)}</h1>\`;
+	\$.bind_props(\$\$props, { world });
+}'
+`;
+
+snapshot[`compile > module-script-and-script 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export function preload() {}
+
+let b = 5;
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let world = \$.fallback(\$\$props["world"], "name");
+
+	\$\$payload.out += \`<h1>hello \${\$.escape(world)}</h1>\`;
+	\$.bind_props(\$\$props, { world });
+}'
+`;
+
+snapshot[`compile > object-binding-export 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let tmp = { name: "world" },
+		rename = \$.fallback(\$\$props["rename"], () => tmp.name, true);
+
+	\$.bind_props(\$\$props, { rename });
+}'
+`;
+
+snapshot[`compile > reactive-assignment-type-cast 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	let team;
+
+	\$: team = { search: "Real", players: [] };
+}'
+`;
+
+snapshot[`compile > reactive-block 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	let a = 1;
+
+	\$: {
+		console.log(a + 1);
+	}
+}'
+`;
+
+snapshot[`compile > reactive-break-\$ 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	\$: {
+		break \$;
+	}
+}'
+`;
+
+snapshot[`compile > reactive-declare-destructuring 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	let a, d, length, e, f, g;
+
+	\$: ({ a } = { a: '' });
+	\$: ({ b: d } = { b: '' });
+	\$: ({ c: { length } } = { c: '' });
+	\$: ({ ...e } = { f: '' });
+	\$: ({ f } = { f: '' });
+	\$: ({ b: g = 1 } = { b: 1 });
+}\`
+`;
+
+snapshot[`compile > reactive-declare-express-starts-with-object 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	let b, c, d, e, f;
+
+	\$: b = ({ a: 1 })['a'];
+	\$: c = ({ a: { b: 1 } })['a']['b'];
+	\$: d = ({ a: { b: 1 } })['a']['b']?.['c'];
+	\$: e = { a: 1 } ?? { a: 1 };
+	\$: f = ({ a: 1 })[c] ? '' : '1';
+	\$.pop();
+}\`
+`;
+
+snapshot[`compile > reactive-declare-object 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	let b;
+
+	\$: b = { a: 1 };
+}'
+`;
+
+snapshot[`compile > reactive-declare-same-name-as-function-parameter 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	let c,
+		d,
+		shadowed1,
+		shadowed2,
+		shadowed3,
+		shadowed4;
+
+	const a = function (shadowed1) {};
+	const b = (shadowed2) => {};
+
+	\$: c = function (shadowed3) {};
+	\$: d = (shadowed4) => {};
+	\$: shadowed1 = 1;
+	\$: shadowed2 = 1;
+	\$: shadowed3 = 1;
+	\$: shadowed4 = 1;
+}'
+`;
+
+snapshot[`compile > reactive-declare-same-name-as-import 1`] = `
+'import * as \$ from "svelte/internal/server";
+import { b as c } from "foo";
+
+export default function _unknown_(\$\$payload) {
+	let b;
+	let a;
+
+	\$: b = 7;
+	\$: a = 5;
+}'
+`;
+
+snapshot[`compile > reactive-declare 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	let b;
+	let a;
+
+	\$: b = 7;
+	\$: a = 5;
+}'
+`;
+
+snapshot[`compile > reactive-statements-store 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	var \$\$store_subs;
+	let foo1, foo2, foo3, foo4;
+	const uid = readable('');
+
+	\$: foo1 = getFoo1(\$.store_get(\$\$store_subs ??= {}, "\$uid", uid));
+
+	\$: console.log({
+		foo1: \$.store_get(\$\$store_subs ??= {}, "\$foo1", foo1)
+	});
+
+	\$: foo2 = getFoo2(\$.store_get(\$\$store_subs ??= {}, "\$uid", uid));
+
+	\$: console.log({
+		foo2: \$.store_get(\$\$store_subs ??= {}, "\$foo2", foo2)
+	});
+
+	\$: ({ foo3 } = getFoo3(\$.store_get(\$\$store_subs ??= {}, "\$uid", uid)));
+
+	\$: console.log({
+		foo3: \$.store_get(\$\$store_subs ??= {}, "\$foo3", foo3)
+	});
+
+	\$: ({ foo4 } = getFoo4(\$.store_get(\$\$store_subs ??= {}, "\$uid", uid)));
+
+	\$: console.log({
+		foo4: \$.store_get(\$\$store_subs ??= {}, "\$foo4", foo4)
+	});
+
+	if (\$\$store_subs) \$.unsubscribe_stores(\$\$store_subs);
+}\`
+`;
+
+snapshot[`compile > renamed-exports-runes.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let name = "world";
+	let name2 = "world";
+
+	\$.bind_props(\$\$props, { name3: name, name4: name2 });
+}'
+`;
+
+snapshot[`compile > renamed-exports 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let name = \$.fallback(\$\$props["name3"], "world");
+	let name2 = \$.fallback(\$\$props["name4"], "world");
+
+	\$.bind_props(\$\$props, { name3: name, name4: name2 });
+}'
+`;
+
+snapshot[`compile > runes-best-effort-types.v5 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let {
+		a,
+		b = true,
+		c = 1,
+		d = '',
+		e = null,
+		f = {},
+		g = foo,
+		h = [],
+		i = undefined,
+		j = undefined,
+		k = 1,
+		l = () => {}
+	} = \$\$props;
+
+	\$.bind_props(\$\$props, { j, k });
+}\`
+`;
+
+snapshot[`compile > runes-bindable.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let { a, b = undefined } = \$\$props;
+
+	\$.bind_props(\$\$props, { b });
+}'
+`;
+
+snapshot[`compile > runes-looking-like-stores.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let { props } = \$\$props;
+	let state = 0;
+	let derived = state * 2;
+
+	\$\$payload.out += \`<!---->\${\$.escape(state)} \${\$.escape(derived)}\`;
+}'
+`;
+
+snapshot[`compile > runes-only-export.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let x = undefined;
+
+	function foo() {
+		return true;
+	}
+
+	\$\$payload.out += \`<!---->\${\$.escape(x)}\`;
+	\$.bind_props(\$\$props, { foo });
+}'
+`;
+
+snapshot[`compile > runes-with-slots.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	/** @type {SomeType} */
+	let { a, b } = \$\$props;
+	let x = 0;
+	let y = x * 2;
+
+	\$\$payload.out += \`<!---->\`;
+	\$.slot(\$\$payload, \$\$props, "default", { x, y }, null);
+	\$\$payload.out += \`<!---->\`;
+}'
+`;
+
+snapshot[`compile > runes.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	/** @type {{a: number, b: string}} */
+	let { a, b } = \$\$props;
+	let x = 0;
+	let y = x * 2;
+}'
+`;
+
+snapshot[`compile > script-and-module-script 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export function preload() {}
+
+let b = 5;
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let world = \$.fallback(\$\$props["world"], "name");
+
+	\$\$payload.out += \`<h1>hello \${\$.escape(world)}</h1>\`;
+	\$.bind_props(\$\$props, { world });
+}'
+`;
+
+snapshot[`compile > script-in-rawhtml 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	const schema = { key: "value" };
+
+	\$\$payload.out += \`\${\$.html(\`<script type="application/ld+json">\${JSON.stringify(schema)}</script>\`)}\`;
+}'
+`;
+
+snapshot[`compile > script-inside-head-after-toplevel-script 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+
+export default function _unknown_(\$\$payload) {
+	let b = 'top level';
+
+	\$.head(\$\$payload, (\$\$payload) => {
+		\$\$payload.out += \`<link rel=\\"stylesheet\\" href=\\"/lib/jodit.es2018.min.css\\"> <script src=\\"/lib/jodit.es2018.min.js\\">\\r
+\\r
+  </script>\`;
+	});
+
+	\$\$payload.out += \`<div><script>let a = 'not top level';</script><!----></div>\`;
+}"
+`;
+
+snapshot[`compile > script-on-bottom 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let world = \$.fallback(\$\$props["world"], "name");
+
+	\$\$payload.out += \`<h1>hello \${\$.escape(world)}</h1>\`;
+	\$.bind_props(\$\$props, { world });
+}'
+`;
+
+snapshot[`compile > script-style-like-component 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	let Script, Style;
+
+	Script(\$\$payload, {
+		children: (\$\$payload) => {
+			\$\$payload.out += \`<p></p>\`;
+		},
+		\$\$slots: { default: true }
+	});
+
+	\$\$payload.out += \`<!----> \`;
+	Style(\$\$payload, {});
+	\$\$payload.out += \`<!---->\`;
+}'
+`;
+
+snapshot[`compile > script-with-src 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {}'
+`;
+
+snapshot[`compile > self-closing-component 1`] = `
+\`import * as \$ from "svelte/internal/server";
+import Test from './Test.svelte';
+
+export default function _unknown_(\$\$payload) {
+	let a = 'b';
+
+	Test(\$\$payload, { b: "6" });
+}\`
+`;
+
+snapshot[`compile > single-element 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	\$\$payload.out += \`<h1>hello</h1>\`;
+}'
+`;
+
+snapshot[`compile > single-export 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let name = \$.fallback(\$\$props["name"], "world");
+
+	\$.bind_props(\$\$props, { name });
+}'
+`;
+
+snapshot[`compile > snippet-instance-script.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	let foo = true;
+
+	bar;
+
+	function bar(\$\$payload) {
+		\$\$payload.out += \`<!---->hello \${\$.escape(foo)}\`;
+	}
+}'
+`;
+
+snapshot[`compile > snippet-module-hoist-1.v5 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { imported } from './x';
+
+function hoistable1(\$\$payload) {
+	\$\$payload.out += \`<div>hello</div>\`;
+}
+
+function hoistable2(\$\$payload, bar) {
+	\$\$payload.out += \`<div>\${\$.escape(bar)}</div>\`;
+}
+
+function hoistable3(\$\$payload, bar) {
+	\$\$payload.out += \`<div>\${\$.escape(bar)}</div>\`;
+}
+
+function hoistable4(\$\$payload, foo) {
+	\$\$payload.out += \`<div>\${\$.escape(foo)}</div>\`;
+}
+
+function hoistable5(\$\$payload) {
+	\$\$payload.out += \`<button>click</button>\`;
+}
+
+function hoistable6(\$\$payload) {
+	\$\$payload.out += \`<div>\${\$.escape(module)}</div>\`;
+}
+
+function hoistable7(\$\$payload) {
+	\$\$payload.out += \`<div>\${\$.escape(imported)}</div>\`;
+}
+
+let module = true;
+
+export default function _unknown_(\$\$payload) {
+	let foo = true;
+
+	function not_hoistable(\$\$payload) {
+		\$\$payload.out += \`<div>\${\$.escape(foo)}</div>\`;
+	}
+}"
+`;
+
+snapshot[`compile > snippet-module-hoist-2.v5 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { imported } from './x';
+
+function hoistable(\$\$payload) {
+	\$\$payload.out += \`<div>hello</div>\`;
+}
+
+export default function _unknown_(\$\$payload) {
+	let foo = true;
+
+	function not_hoistable(\$\$payload) {
+		\$\$payload.out += \`<div>\${\$.escape(foo)}</div>\`;
+	}
+}"
+`;
+
+snapshot[`compile > snippet-module-hoist-3.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+function hoistable1(\$\$payload) {
+	\$\$payload.out += \`<div>hello</div>\`;
+}
+
+function hoistable2(\$\$payload) {
+	\$\$payload.out += \`<div>\${\$.escape(foo)}</div>\`;
+}
+
+let foo = true;
+
+export default function _unknown_(\$\$payload) {}'
+`;
+
+snapshot[`compile > store-from-module 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { store1, store2 } from './store';
+
+const store3 = writable('');
+const store4 = writable('');
+
+export default function _unknown_(\$\$payload) {
+	var \$\$store_subs;
+
+	\$.store_get(\$\$store_subs ??= {}, \\"\$store1\\", store1);
+	\$.store_get(\$\$store_subs ??= {}, \\"\$store3\\", store3);
+	\$\$payload.out += \`<p>\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store2\\", store2))}</p> <p>\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store4\\", store4))}</p>\`;
+	if (\$\$store_subs) \$.unsubscribe_stores(\$\$store_subs);
+}"
+`;
+
+snapshot[`compile > store-from-reactive-assignment 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	var \$\$store_subs;
+	let store, store1, noStore, store2, noStore;
+
+	\$: store = fromSomewhere();
+	\$: ({ store1, noStore } = fromSomewhere());
+	\$: [store2, noStore] = fromSomewhere();
+	\$\$payload.out += \`<p>\${\$.escape(\$.store_get(\$\$store_subs ??= {}, "\$store", store))}</p> <p>\${\$.escape(\$.store_get(\$\$store_subs ??= {}, "\$store1", store1))}</p> <p>\${\$.escape(\$.store_get(\$\$store_subs ??= {}, "\$store2", store2))}</p>\`;
+	if (\$\$store_subs) \$.unsubscribe_stores(\$\$store_subs);
+}'
+`;
+
+snapshot[`compile > store-import 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import storeA from './store';
+import { storeB } from './store';
+import { storeB as storeC } from './store';
+
+export default function _unknown_(\$\$payload) {
+	var \$\$store_subs;
+
+	\$\$payload.out += \`<p>\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$storeA\\", storeA))}</p> <p>\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$storeB\\", storeB))}</p> <p>\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$storeC\\", storeC))}</p>\`;
+	if (\$\$store_subs) \$.unsubscribe_stores(\$\$store_subs);
+}"
+`;
+
+snapshot[`compile > store-property-access 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+
+export default function _unknown_(\$\$payload) {
+	var \$\$store_subs;
+	const store = someStore();
+
+	\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store);
+	\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store).prop;
+	\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store)['prop'];
+	\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store).prop.anotherProp;
+	\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store)['prop'].anotherProp;
+	\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store).prop['anotherProp'];
+	\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store)['prop']['anotherProp'];
+	\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store)?.prop.anotherProp;
+	\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store)?.prop?.anotherProp;
+	\$\$payload.out += \`<p>\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store))}</p> <p>\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store).prop)}</p> <p>\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store)['prop'])}</p> <p>\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store).prop.anotherProp)}</p> <p>\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store)['prop'].anotherProp)}</p> <p>\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store).prop['anotherProp'])}</p> <p>\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store)['prop']['anotherProp'])}</p> <p>\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store)?.prop.anotherProp)}</p> <p>\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store)?.prop?.anotherProp)}</p>\`;
+	if (\$\$store_subs) \$.unsubscribe_stores(\$\$store_subs);
+}"
+`;
+
+snapshot[`compile > stores-looking-like-runes 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	var \$\$store_subs;
+	const props = null;
+
+	\$.store_get(\$\$store_subs ??= {}, "\$props", props);
+
+	const state = null;
+
+	\$.store_get(\$\$store_subs ??= {}, "\$state", state);
+
+	const derived = null;
+
+	\$.store_get(\$\$store_subs ??= {}, "\$derived", derived);
+	\$\$payload.out += \`<!---->\${\$.escape(state)} \${\$.escape(derived)}\`;
+	if (\$\$store_subs) \$.unsubscribe_stores(\$\$store_subs);
+}'
+`;
+
+snapshot[`compile > style-after-selfclosing-iframe 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	\$\$payload.out += \`<iframe src=""></iframe>\`;
+}'
+`;
+
+snapshot[`compile > style-attribute-bare 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	\$\$payload.out += \`<!---->\${\$.escape(true === true)}\`;
+}'
+`;
+
+snapshot[`compile > style-attribute 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {}'
+`;
+
+snapshot[`compile > style-in-script 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+
+export default function _unknown_(\$\$payload) {
+	const config = { branding: { primaryColor: '#012345' } },
+		branding = config?.branding;
+
+	const cssString = \`<style>:root {--primary-color: \${branding?.primaryColor ?? '#ABCDEF'};}</style>\`;
+}"
+`;
+
+snapshot[`compile > style 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {}'
+`;
+
+snapshot[`compile > svelte-element 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+
+export default function _unknown_(\$\$payload) {
+	let tag = 'div';
+
+	\$.element(\$\$payload, tag);
+	\$\$payload.out += \` \`;
+	\$.element(\$\$payload, 'tag');
+	\$\$payload.out += \` \`;
+	\$.element(\$\$payload, tag ? 'a' : 'b');
+	\$\$payload.out += \` \`;
+
+	\$.element(\$\$payload, tag, undefined, () => {
+		\$\$payload.out += \`\${\$.escape(tag)}\`;
+	});
+
+	\$\$payload.out += \` \`;
+	\$.element(\$\$payload, tag);
+	\$\$payload.out += \` \`;
+
+	\$.element(\$\$payload, 'a', () => {
+		\$\$payload.out += \` data-sveltekit-preload-data=\\"\\" href=\\"https://kit.svelte.dev\\"\`;
+	});
+}"
+`;
+
+snapshot[`compile > svelte-self-forward-event 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { createEventDispatcher } from \\"svelte\\";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	let a = [''];
+	const dispatch = createEventDispatcher();
+	const each_array = \$.ensure_array_like(a);
+
+	\$\$payload.out += \`<!--[-->\`;
+
+	for (let \$\$index = 0, \$\$length = each_array.length; \$\$index < \$\$length; \$\$index++) {
+		let item = each_array[\$\$index];
+
+		_unknown_(\$\$payload, {});
+		\$\$payload.out += \`<!---->\`;
+	}
+
+	\$\$payload.out += \`<!--]-->\`;
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > sveltekit-autotypes-\$props-rune-no-changes.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	/** @type {{form: boolean, data: true }} */
+	let { form, data } = \$\$props;
+	const snapshot = {};
+
+	\$.bind_props(\$\$props, { snapshot });
+}'
+`;
+
+snapshot[`compile > sveltekit-autotypes-\$props-rune.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let { form, data } = \$\$props;
+	const snapshot = {};
+
+	\$.bind_props(\$\$props, { snapshot });
+}'
+`;
+
+snapshot[`compile > transforms-interfaces-dts 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let foo = \$\$props["foo"];
+	let bar = \$\$props["bar"];
+
+	\$.bind_props(\$\$props, { foo, bar });
+}'
+`;
+
+snapshot[`compile > ts-\$\$Props-interface-only-props 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	
+}'
+`;
+
+snapshot[`compile > ts-\$\$Props-interface 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let exported1 = \$\$props["exported1"];
+	let exported2 = \$.fallback(\$\$props["exported2"], '');
+	let name1 = \$.fallback(\$\$props["name1"], "world");
+	let name2 = \$\$props["name2"];
+	let rename1 = \$.fallback(\$\$props["renamed1"], '');
+	let rename2 = \$\$props["renamed2"];
+
+	class Foo {}
+	function bar() {}
+
+	const baz = '';
+
+	class RenameFoo {}
+	function renamebar() {}
+
+	const renamebaz = '';
+
+	\$.bind_props(\$\$props, {
+		exported1,
+		exported2,
+		name1,
+		name2,
+		renamed1: rename1,
+		renamed2: rename2,
+		Foo,
+		RenamedFoo: RenameFoo,
+		bar,
+		baz,
+		renamedbar: renamebar,
+		renamedbaz: renamebaz
+	});
+}\`
+`;
+
+snapshot[`compile > ts-\$\$Props-type 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let exported1 = \$\$props["exported1"];
+	let exported2 = \$.fallback(\$\$props["exported2"], '');
+	let name1 = \$.fallback(\$\$props["name1"], "world");
+	let name2 = \$\$props["name2"];
+	let rename1 = \$.fallback(\$\$props["renamed1"], '');
+	let rename2 = \$\$props["renamed2"];
+
+	class Foo {}
+	function bar() {}
+
+	const baz = '';
+
+	class RenameFoo {}
+	function renamebar() {}
+
+	const renamebaz = '';
+
+	\$.bind_props(\$\$props, {
+		exported1,
+		exported2,
+		name1,
+		name2,
+		renamed1: rename1,
+		renamed2: rename2,
+		Foo,
+		RenamedFoo: RenameFoo,
+		bar,
+		baz,
+		renamedbar: renamebar,
+		renamedbaz: renamebaz
+	});
+}\`
+`;
+
+snapshot[`compile > ts-\$\$Props-with-\$\$props 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	const \$\$sanitized_props = \$.sanitize_props(\$\$props);
+
+	function c() {}
+	\$\$payload.out += \`<!---->\${\$.escape(\$\$sanitized_props)}\`;
+	\$.bind_props(\$\$props, { c });
+}'
+`;
+
+snapshot[`compile > ts-\$\$generics-accessor-dts 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let a = \$\$props["a"];
+
+	\$.bind_props(\$\$props, { a });
+}'
+`;
+
+snapshot[`compile > ts-\$\$generics-accessor 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let a = \$\$props["a"];
+
+	\$.bind_props(\$\$props, { a });
+}'
+`;
+
+snapshot[`compile > ts-\$\$generics-dts 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { createEventDispatcher } from 'svelte';
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	let a = \$\$props[\\"a\\"];
+	let b = \$\$props[\\"b\\"];
+	let c = \$\$props[\\"c\\"];
+	const dispatch = createEventDispatcher();
+
+	function getA() {
+		return a;
+	}
+
+	\$\$payload.out += \`<!---->\`;
+	\$.slot(\$\$payload, \$\$props, \\"default\\", { c }, null);
+	\$\$payload.out += \`<!---->\`;
+	\$.bind_props(\$\$props, { a, b, c, getA });
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > ts-\$\$generics-interface-references 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let a = \$\$props["a"];
+	let b = \$\$props["b"];
+
+	\$.bind_props(\$\$props, { a, b });
+}'
+`;
+
+snapshot[`compile > ts-\$\$generics 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { createEventDispatcher } from 'svelte';
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	let a = \$\$props[\\"a\\"];
+	let b = \$\$props[\\"b\\"];
+	let c = \$\$props[\\"c\\"];
+	const dispatch = createEventDispatcher();
+
+	function getA() {
+		return a;
+	}
+
+	\$\$payload.out += \`<!---->\`;
+	\$.slot(\$\$payload, \$\$props, \\"default\\", { c }, null);
+	\$\$payload.out += \`<!---->\`;
+	\$.bind_props(\$\$props, { a, b, c, getA });
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > ts-creates-dts 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import Bar from './bar';
+import { createEventDispatcher } from 'svelte';
+
+export const foo = 'foo';
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	let bar = \$\$props[\\"bar\\"];
+	let foobar = \$.fallback(\$\$props[\\"foobar\\"], '');
+	const dispatch = createEventDispatcher();
+
+	\$\$payload.out += \`<button>hi</button> <!---->\`;
+	\$.slot(\$\$payload, \$\$props, \\"default\\", { bar }, null);
+	\$\$payload.out += \`<!---->\`;
+	\$.bind_props(\$\$props, { bar, foobar });
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > ts-event-dispatcher-typed-non-literal 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { createEventDispatcher } from \\"svelte\\";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	const dispatch = createEventDispatcher();
+
+	dispatch('hi', true);
+
+	function bye() {
+		const bla = 'bye';
+
+		dispatch(bla, false);
+	}
+
+	\$\$payload.out += \`<button></button>\`;
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > ts-export-doc-typedef 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let a = \$\$props["a"];
+
+	\$.bind_props(\$\$props, { a });
+}'
+`;
+
+snapshot[`compile > ts-export-has-initializer 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let a = \$.fallback(\$\$props["a"], '');
+
+	\$.bind_props(\$\$props, { a });
+}\`
+`;
+
+snapshot[`compile > ts-export-required-props 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let a = \$\$props["a"];
+	let b = \$\$props["b"];
+	let c = \$.fallback(\$\$props["c"], 123);
+
+	\$.bind_props(\$\$props, { a, b, c });
+}'
+`;
+
+snapshot[`compile > ts-function-type-scope 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	let id;
+	let callback;
+	let callback2;
+	let constructor1;
+	let obj;
+
+	\$: ({ id } = { id: '' });
+}\`
+`;
+
+snapshot[`compile > ts-generics-attribute1 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { createEventDispatcher } from 'svelte';
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	let a = \$\$props[\\"a\\"];
+	let b = \$\$props[\\"b\\"];
+	let c = \$\$props[\\"c\\"];
+	const dispatch = createEventDispatcher();
+
+	function getA() {
+		return a;
+	}
+
+	\$\$payload.out += \`<!---->\`;
+	\$.slot(\$\$payload, \$\$props, \\"default\\", { c }, null);
+	\$\$payload.out += \`<!---->\`;
+	\$.bind_props(\$\$props, { a, b, c, getA });
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > ts-generics-attribute2 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let a = \$\$props["a"];
+
+	\$.bind_props(\$\$props, { a });
+}'
+`;
+
+snapshot[`compile > ts-runes-bindable.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let { a, b = undefined, c = 0 } = \$\$props;
+
+	\$.bind_props(\$\$props, { b, c });
+}'
+`;
+
+snapshot[`compile > ts-runes-generics.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let { a, b } = \$\$props;
+	let x = 0;
+	let y = x * 2;
+}'
+`;
+
+snapshot[`compile > ts-runes-hoistable-props-1.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+let value = 1;
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let { a, b } = \$\$props;
+}'
+`;
+
+snapshot[`compile > ts-runes-hoistable-props-2.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+let value = 1;
+
+export default function _unknown_(\$\$payload, \$\$props: { a: Dependency, b: string }) {
+	let { a, b } = \$\$props;
+}'
+`;
+
+snapshot[`compile > ts-runes-hoistable-props-4.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let { foo } = \$\$props;
+}'
+`;
+
+snapshot[`compile > ts-runes-hoistable-props-5.v5 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { readable } from 'svelte/store';
+import X from './X';
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	var \$\$store_subs;
+	const store = readable(1);
+	let { foo } = \$\$props;
+
+	\$\$payload.out += \`<!---->\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store\\", store))}\`;
+	if (\$\$store_subs) \$.unsubscribe_stores(\$\$store_subs);
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > ts-runes-hoistable-props-false-1.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	const a = 1;
+	let { foo } = \$\$props;
+}'
+`;
+
+snapshot[`compile > ts-runes-hoistable-props-false-2.v5 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	const a = '';
+	let { foo } = \$\$props;
+}\`
+`;
+
+snapshot[`compile > ts-runes-hoistable-props-false-3.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let { someProp } = \$\$props;
+}'
+`;
+
+snapshot[`compile > ts-runes-hoistable-props-false-4.v5 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+let a = '';
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let a = true;
+	let { someProp } = \$\$props;
+}\`
+`;
+
+snapshot[`compile > ts-runes-hoistable-props-false-5.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let { someProp } = \$\$props;
+}'
+`;
+
+snapshot[`compile > ts-runes-with-slot.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let { a, b } = \$\$props;
+	let x = 0;
+	let y = x * 2;
+
+	\$\$payload.out += \`<!---->\`;
+	\$.slot(\$\$payload, \$\$props, "default", { x, y }, null);
+	\$\$payload.out += \`<!---->\`;
+}'
+`;
+
+snapshot[`compile > ts-runes.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props: { a: number, b: string }) {
+	let { a, b } = \$\$props;
+	let x = 0;
+	let y = x * 2;
+}'
+`;
+
+snapshot[`compile > ts-script-tag-generics 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let init = \$\$props["init"];
+
+	\$.bind_props(\$\$props, { init });
+}'
+`;
+
+snapshot[`compile > ts-style-and-script 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let foo = \$\$props["foo"];
+
+	\$.bind_props(\$\$props, { foo });
+}'
+`;
+
+snapshot[`compile > ts-sveltekit-autotypes-\$props-rune.v5 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	const snapshot = {};
+	let { form, data } = \$\$props;
+
+	\$.bind_props(\$\$props, { snapshot });
+}'
+`;
+
+snapshot[`compile > ts-uses-\$\$props 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	const \$\$sanitized_props = \$.sanitize_props(\$\$props);
+
+	\$.push();
+	\$\$payload.out += \`<h1>\${\$.escape(\$\$sanitized_props['name'])}</h1>\`;
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > typeof-\$store 1`] = `
+'import * as \$ from "svelte/internal/server";
+import { writable } from "svelte/store";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	const foo = writable(1);
+
+	\$.pop();
+}'
+`;
+
+snapshot[`compile > uses-\$\$props-script 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	const \$\$sanitized_props = \$.sanitize_props(\$\$props);
+
+	\$.push();
+
+	let name = \$\$sanitized_props['name'];
+
+	\$\$payload.out += \`<h1>\${\$.escape(name)}</h1>\`;
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > uses-\$\$props 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	const \$\$sanitized_props = \$.sanitize_props(\$\$props);
+
+	\$.push();
+	\$\$payload.out += \`<h1>\${\$.escape(\$\$sanitized_props['name'])}</h1>\`;
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > uses-\$\$restProps-script 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	const \$\$sanitized_props = \$.sanitize_props(\$\$props);
+	const \$\$restProps = \$.rest_props(\$\$sanitized_props, []);
+
+	\$.push();
+
+	let name = \$\$restProps['name'];
+
+	\$\$payload.out += \`<h1>\${\$.escape(name)}</h1>\`;
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > uses-\$\$restProps 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	const \$\$sanitized_props = \$.sanitize_props(\$\$props);
+	const \$\$restProps = \$.rest_props(\$\$sanitized_props, []);
+
+	\$.push();
+	\$\$payload.out += \`<h1>\${\$.escape(\$\$restProps['name'])}</h1>\`;
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > uses-\$\$slots-script 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	const \$\$slots = \$.sanitize_slots(\$\$props);
+	let name = \$\$slots.foo;
+	let dashedName = \$\$slots['dashed-name'];
+
+	\$\$payload.out += \`<h1>\${\$.escape(name)}</h1> <!---->\`;
+	\$.slot(\$\$payload, \$\$props, \\"foo\\", {}, null);
+	\$\$payload.out += \`<!----> <!---->\`;
+	\$.slot(\$\$payload, \$\$props, \\"dashed-name\\", {}, null);
+	\$\$payload.out += \`<!----> <!---->\`;
+	\$.slot(\$\$payload, \$\$props, \\"default\\", {}, null);
+	\$\$payload.out += \`<!---->\`;
+}"
+`;
+
+snapshot[`compile > uses-\$\$slots 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	const \$\$slots = \$.sanitize_slots(\$\$props);
+
+	\$\$payload.out += \`<h1>\${\$.escape(\$\$slots.foo)}</h1> <h1>\${\$.escape(\$\$slots['dashed-name'])}</h1> <!---->\`;
+	\$.slot(\$\$payload, \$\$props, \\"foo\\", {}, null);
+	\$\$payload.out += \`<!----> <!---->\`;
+	\$.slot(\$\$payload, \$\$props, \\"dashed-name\\", {}, null);
+	\$\$payload.out += \`<!----> <!---->\`;
+	\$.slot(\$\$payload, \$\$props, \\"default\\", {}, null);
+	\$\$payload.out += \`<!---->\`;
+}"
+`;
+
+snapshot[`compile > uses-\$property 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload) {
+	class C {
+		\$bla;
+	}
+}'
+`;
+
+snapshot[`compile > uses-\$store-multiple-variable-declaration 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+
+export default function _unknown_(\$\$payload) {
+	var \$\$store_subs;
+	let store7, store8, store9, store10;
+	const store1 = '', store2 = '';
+
+	const { store3, store4 } = '',
+		[store5, store6] = '';
+
+	\$: ({ store7, store8 } = '');
+	\$: [store9, store10] = '';
+
+	\$\$payload.out += \`<!---->\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store1\\", store1))}\\r
+\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store2\\", store2))}\\r
+\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store3\\", store3))}\\r
+\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store4\\", store4))}\\r
+\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store5\\", store5))}\\r
+\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store6\\", store6))}\\r
+\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store7\\", store7))}\\r
+\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store8\\", store8))}\\r
+\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store9\\", store9))}\\r
+\${\$.escape(\$.store_get(\$\$store_subs ??= {}, \\"\$store10\\", store10))}\`;
+
+	if (\$\$store_subs) \$.unsubscribe_stores(\$\$store_subs);
+}"
+`;
+
+snapshot[`compile > uses-\$store-with-assignment-operators 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { writable } from 'svelte/store';
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	var \$\$store_subs;
+	const count = writable(0);
+	let myvar = 42; // to show that this is different from ++ or --
+	const handler1 = () => \$.store_set(count, \$.store_get(\$\$store_subs ??= {}, \\"\$count\\", count) + myvar);
+	const handler2 = () => \$.store_set(count, \$.store_get(\$\$store_subs ??= {}, \\"\$count\\", count) - myvar);
+	const handler3 = () => \$.store_set(count, \$.store_get(\$\$store_subs ??= {}, \\"\$count\\", count) * myvar);
+	const handler4 = () => \$.store_set(count, \$.store_get(\$\$store_subs ??= {}, \\"\$count\\", count) / myvar);
+	const handler5 = () => \$.store_set(count, \$.store_get(\$\$store_subs ??= {}, \\"\$count\\", count) ** myvar);
+	const handler6 = () => \$.store_set(count, \$.store_get(\$\$store_subs ??= {}, \\"\$count\\", count) % myvar);
+	const handler7 = () => \$.store_set(count, \$.store_get(\$\$store_subs ??= {}, \\"\$count\\", count) << myvar);
+	const handler8 = () => \$.store_set(count, \$.store_get(\$\$store_subs ??= {}, \\"\$count\\", count) >> myvar);
+	const handler9 = () => \$.store_set(count, \$.store_get(\$\$store_subs ??= {}, \\"\$count\\", count) >>> myvar);
+	const handler10 = () => \$.store_set(count, \$.store_get(\$\$store_subs ??= {}, \\"\$count\\", count) & myvar);
+	const handler11 = () => \$.store_set(count, \$.store_get(\$\$store_subs ??= {}, \\"\$count\\", count) ^ myvar);
+	const handler12 = () => \$.store_set(count, \$.store_get(\$\$store_subs ??= {}, \\"\$count\\", count) | myvar);
+
+	\$\$payload.out += \`<button>add</button> <button>subtract</button> <button>multiply</button> <button>divide</button> <button>exponent</button> <button>mod</button> <button>leftshift</button> <button>rightshift</button> <button>unsigned rightshift</button> <button>AND</button> <button>XOR</button> <button>OR</button>\`;
+	if (\$\$store_subs) \$.unsubscribe_stores(\$\$store_subs);
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > uses-\$store-with-increments 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { writable } from 'svelte/store';
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	var \$\$store_subs;
+	const count = writable(0);
+	const handler1 = () => \$.update_store_pre(\$\$store_subs ??= {}, \\"\$count\\", count);
+	const handler2 = () => \$.update_store(\$\$store_subs ??= {}, \\"\$count\\", count, -1);
+
+	\$\$payload.out += \`<button>add</button> <button>subtract</button> <button>add</button>\`;
+	if (\$\$store_subs) \$.unsubscribe_stores(\$\$store_subs);
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > uses-\$store-with-unary-operators 1`] = `
+"import * as \$ from \\"svelte/internal/server\\";
+import { writable } from 'svelte/store';
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	\$.push();
+
+	var \$\$store_subs;
+	const count = writable(0);
+	const handler1 = () => !\$.store_get(\$\$store_subs ??= {}, \\"\$count\\", count);
+	const handler2 = () => +\$.store_get(\$\$store_subs ??= {}, \\"\$count\\", count);
+	const handler3 = () => -\$.store_get(\$\$store_subs ??= {}, \\"\$count\\", count);
+	const handler4 = () => ~\$.store_get(\$\$store_subs ??= {}, \\"\$count\\", count);
+
+	\$\$payload.out += \`<button>add</button> <button>add</button> <button>add</button> <button>add</button>\`;
+	if (\$\$store_subs) \$.unsubscribe_stores(\$\$store_subs);
+	\$.pop();
+}"
+`;
+
+snapshot[`compile > uses-accessors-attr-not-present 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let foo = \$.fallback(\$\$props["foo"], undefined);
+	const bar = '';
+
+	\$.bind_props(\$\$props, { foo, bar });
+}\`
+`;
+
+snapshot[`compile > uses-accessors-attr-present 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let foo = \$.fallback(\$\$props["foo"], undefined);
+	let foo2 = \$.fallback(\$\$props["foo2"], undefined);
+	let clazz = \$\$props["class"];
+	const bar = '';
+
+	\$.bind_props(\$\$props, { foo, foo2, class: clazz, bar });
+}\`
+`;
+
+snapshot[`compile > uses-accessors-mustachetag-false 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let foo = \$.fallback(\$\$props["foo"], undefined);
+	const bar = '';
+
+	\$.bind_props(\$\$props, { foo, bar });
+}\`
+`;
+
+snapshot[`compile > uses-accessors-mustachetag-true 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let foo = \$.fallback(\$\$props["foo"], undefined);
+	let foo2 = \$.fallback(\$\$props["foo2"], undefined);
+	let clazz = \$\$props["class"];
+	const bar = '';
+
+	\$.bind_props(\$\$props, { foo, foo2, class: clazz, bar });
+}\`
+`;
+
+snapshot[`compile > uses-accessors-no-svelte-options 1`] = `
+\`import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	let foo = \$.fallback(\$\$props["foo"], undefined);
+	const bar = '';
+
+	\$.bind_props(\$\$props, { foo, bar });
+}\`
+`;
+
+snapshot[`compile > uses-svelte-components-let-forward 1`] = `
+'import * as \$ from "svelte/internal/server";
+
+export default function _unknown_(\$\$payload, \$\$props) {
+	if (true) {
+		\$\$payload.out += "<!--[-->";
+
+		_unknown_(\$\$payload, {
+			children: \$.invalid_default_snippet,
+			\$\$slots: {
+				default: (\$\$payload, { prop }) => {
+					\$\$payload.out += \`<!---->\`;
+					\$.slot(\$\$payload, \$\$props, "default", { prop }, null);
+					\$\$payload.out += \`<!---->\`;
+				}
+			}
+		});
+
+		\$\$payload.out += \`<!---->\`;
+	} else {
+		\$\$payload.out += "<!--[!-->";
+	}
+
+	\$\$payload.out += \`<!--]--> <!---->\`;
+
+	testComponent?.(\$\$payload, {
+		children: \$.invalid_default_snippet,
+		\$\$slots: {
+			default: (\$\$payload, { prop }) => {
+				\$\$payload.out += \`<!---->\`;
+				\$.slot(\$\$payload, \$\$props, "default", { prop }, null);
+				\$\$payload.out += \`<!---->\`;
+			}
+		}
+	});
+
+	\$\$payload.out += \`<!---->\`;
+}'
+`;
