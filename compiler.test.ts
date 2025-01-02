@@ -4,7 +4,7 @@ import { Project } from "ts-morph";
 import { compile } from "./compiler.ts";
 Deno.test({
   name: "compile",
-  permissions: { read: true },
+  permissions: { read: true, write: true },
   async fn(t) {
     await t.step("$store-as-directive", async (s) => {
       const sourceCode = await Deno.readTextFile(
@@ -12,7 +12,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "$store-as-directive" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -23,7 +23,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "$store-assign" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -34,7 +34,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "$store-export-type" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -45,7 +45,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "$store-index" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -56,9 +56,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "$store-inside-block-without-braces",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -69,9 +67,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "$store-nested-declaration",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -82,9 +78,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "$store-no-instance-only-module-script",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -95,7 +89,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "$store-prop-init" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -106,9 +100,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "accessors-config-attr-false",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -119,7 +111,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "accessors-config" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -130,7 +122,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "array-binding-export" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -141,7 +133,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ast-offset-none" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -152,7 +144,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ast-offset-some" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -163,9 +155,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "attributes-foreign-ns",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -176,7 +166,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "await-with-$store" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -187,9 +177,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "binding-assignment-$store",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -200,7 +188,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "binding-group-store" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -211,9 +199,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "circle-drawer-example",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -224,7 +210,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "commented-out-script" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -235,9 +221,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-default-slot",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -248,9 +232,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-events-interface-constant",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -261,9 +243,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-events-interface-dispatcher",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -274,9 +254,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-events-interface-string-literals",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -287,9 +265,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-events-interface",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -300,9 +276,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-events-strictEvents",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -313,9 +287,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-events-type",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -326,9 +298,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-multiple-slots",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -339,9 +309,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-slot-$$slot-interface",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -352,9 +320,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-slot-$$slot-type",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -365,9 +331,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-slot-crazy-attributes",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -378,9 +342,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-slot-fallback",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -391,9 +353,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-slot-forward-with-props",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -404,9 +364,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-slot-inside-await",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -417,9 +375,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-slot-inside-each",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -430,9 +386,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-slot-let-forward-named-slot",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -443,9 +397,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-slot-let-forward",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -456,9 +408,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-slot-nest-scope",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -469,9 +419,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-slot-no-space",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -482,9 +430,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-slot-object-key",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -495,9 +441,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-slot-var-shadowing",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -508,9 +452,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-with-documentation",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -523,9 +465,7 @@ Deno.test({
         );
         const resultString = compile(sourceCode);
         if (compiles(resultString)) {
-          await assertSnapshot(s, resultString, {
-            name: "component-with-indented-multiline-documentation",
-          });
+          await assertSnapshot(s, resultString);
         } else {
           fail("Failed to compile");
         }
@@ -537,9 +477,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "component-with-multiline-documentation",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -550,9 +488,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "const-tag-await-then-destructuring",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -563,7 +499,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "const-tag-await-then" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -574,7 +510,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "const-tag-component" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -585,9 +521,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "const-tag-each-destructure",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -598,7 +532,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "const-tag-each" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -609,7 +543,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "creates-dts" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -620,9 +554,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "creates-no-script-dts",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -633,9 +565,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "custom-css-properties-with-$store",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -646,7 +576,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "debug-block" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -657,7 +587,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "editing-mustache" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -668,7 +598,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "empty-source" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -679,9 +609,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "event-and-forwarded-event",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -692,9 +620,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "event-bubble-component-multi",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -705,9 +631,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "event-bubble-component-with-props",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -718,9 +642,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "event-bubble-component",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -731,7 +653,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "event-bubble-element" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -742,9 +664,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "event-bubble-svelte-element",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -755,9 +675,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "event-dispatcher-events-alias",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -768,9 +686,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "event-dispatcher-events",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -781,7 +697,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "event-dispatchers" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -792,7 +708,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "export-class" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -803,9 +719,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "export-const-array-destructuring",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -816,9 +730,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "export-const-object-destructuring",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -829,7 +741,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "export-destructuring" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -840,7 +752,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "export-doc" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -851,9 +763,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "export-js-required-props",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -864,7 +774,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "export-list-runes.v5" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -875,7 +785,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "export-list" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -886,9 +796,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "export-references-local",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -899,9 +807,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "export-with-default-multi",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -912,9 +818,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "filename-is-invalid-identifier",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -925,9 +829,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "filename-is-invalid-identifiers-only",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -938,7 +840,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "function-scope" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -949,9 +851,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "generic-attribute-const-modifier",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -962,7 +862,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "import-equal" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -973,9 +873,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "import-leading-comment",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -986,7 +884,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "import-single-quote" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -997,9 +895,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "imports-module-instance",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1010,7 +906,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "imports" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1021,9 +917,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "jsdoc-before-first-import",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1034,9 +928,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "module-script-and-script-in-line2",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1047,9 +939,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "module-script-and-script-in-line",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1060,9 +950,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "module-script-and-script2",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1073,9 +961,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "module-script-and-script3.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1086,9 +972,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "module-script-and-script",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1099,9 +983,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "nested-$-variables-script",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1112,9 +994,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "nested-$-variables-template",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1125,9 +1005,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "object-binding-export",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1138,9 +1016,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "reactive-$store-destructuring",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1151,9 +1027,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "reactive-assignment-type-cast",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1164,7 +1038,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "reactive-block" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1175,7 +1049,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "reactive-break-$" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1186,9 +1060,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "reactive-declare-destructuring",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1199,9 +1071,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "reactive-declare-express-starts-with-object",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1212,9 +1082,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "reactive-declare-object",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1227,9 +1095,7 @@ Deno.test({
         );
         const resultString = compile(sourceCode);
         if (compiles(resultString)) {
-          await assertSnapshot(s, resultString, {
-            name: "reactive-declare-same-name-as-function-parameter",
-          });
+          await assertSnapshot(s, resultString);
         } else {
           fail("Failed to compile");
         }
@@ -1241,9 +1107,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "reactive-declare-same-name-as-import",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1254,7 +1118,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "reactive-declare" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1265,9 +1129,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "reactive-statements-store",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1278,7 +1140,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "reactive-store-set" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1289,9 +1151,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "renamed-exports-runes.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1302,7 +1162,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "renamed-exports" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1313,9 +1173,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "runes-best-effort-types.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1326,7 +1184,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "runes-bindable.v5" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1337,9 +1195,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "runes-looking-like-stores.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1350,7 +1206,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "runes-only-export.v5" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1361,7 +1217,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "runes-with-slots.v5" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1372,7 +1228,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "runes.v5" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1383,9 +1239,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "script-and-module-script",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1396,7 +1250,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "script-in-rawhtml" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1407,9 +1261,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "script-inside-head-after-toplevel-script",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1420,7 +1272,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "script-on-bottom" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1431,9 +1283,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "script-style-like-component",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1444,7 +1294,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "script-with-src" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1455,9 +1305,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "self-closing-component",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1468,7 +1316,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "single-element" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1479,7 +1327,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "single-export" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1490,7 +1338,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "slot-bind-this" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1501,9 +1349,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "snippet-instance-script.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1514,9 +1360,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "snippet-module-hoist-1.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1527,9 +1371,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "snippet-module-hoist-2.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1540,9 +1382,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "snippet-module-hoist-3.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1553,7 +1393,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "store-destructuring" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1564,7 +1404,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "store-from-module" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1575,9 +1415,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "store-from-reactive-assignment",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1588,7 +1426,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "store-import" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1599,9 +1437,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "store-property-access",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1612,9 +1448,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "stores-looking-like-runes",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1625,7 +1459,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "stores-mustache" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1636,9 +1470,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "style-after-selfclosing-iframe",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1649,7 +1481,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "style-attribute-bare" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1660,7 +1492,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "style-attribute" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1671,7 +1503,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "style-in-script" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1682,7 +1514,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "style" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1693,7 +1525,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "svelte-element" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1704,9 +1536,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "svelte-self-forward-event",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1717,9 +1547,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "sveltekit-autotypes-$props-rune-no-changes.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1730,9 +1558,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "sveltekit-autotypes-$props-rune.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1743,7 +1569,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "sveltekit-autotypes" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1754,9 +1580,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "transforms-interfaces-dts",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1767,9 +1591,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-$$Props-interface-only-props",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1780,7 +1602,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-$$Props-interface" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1791,7 +1613,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-$$Props-type" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1802,9 +1624,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-$$Props-with-$$props",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1815,9 +1635,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-$$generics-accessor-dts",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1828,9 +1646,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-$$generics-accessor",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1841,7 +1657,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-$$generics-dts" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1852,9 +1668,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-$$generics-interface-references",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1865,7 +1679,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-$$generics" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1876,7 +1690,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-creates-dts" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1887,9 +1701,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-event-dispatcher-typed-non-literal",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1900,9 +1712,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-event-dispatcher-typed",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1913,9 +1723,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-event-dispatchers-same-event",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1926,7 +1734,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-event-dispatchers" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1937,9 +1745,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-export-arrow-function",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1950,7 +1756,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-export-boolean" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1961,7 +1767,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-export-const" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1972,9 +1778,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-export-doc-typedef",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1985,7 +1789,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-export-doc" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -1996,9 +1800,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-export-has-initializer",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2009,7 +1811,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-export-has-type" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2020,7 +1822,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-export-interface" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2031,9 +1833,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-export-list-runes.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2044,7 +1844,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-export-list" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2055,9 +1855,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-export-required-props",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2068,9 +1866,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-function-type-scope",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2081,9 +1877,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-generics-attribute1",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2094,9 +1888,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-generics-attribute2",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2107,7 +1899,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-multiple-export" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2118,9 +1910,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-runes-best-effort-types.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2131,7 +1921,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-runes-bindable.v5" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2142,7 +1932,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-runes-generics.v5" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2153,9 +1943,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-runes-hoistable-props-1.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2166,9 +1954,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-runes-hoistable-props-2.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2179,9 +1965,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-runes-hoistable-props-4.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2192,9 +1976,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-runes-hoistable-props-5.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2205,9 +1987,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-runes-hoistable-props-false-1.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2218,9 +1998,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-runes-hoistable-props-false-2.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2231,9 +2009,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-runes-hoistable-props-false-3.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2244,9 +2020,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-runes-hoistable-props-false-4.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2257,9 +2031,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-runes-hoistable-props-false-5.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2270,9 +2042,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-runes-with-slot.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2283,7 +2053,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-runes.v5" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2294,9 +2064,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-script-tag-generics",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2307,7 +2075,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-style-and-script" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2320,9 +2088,7 @@ Deno.test({
         );
         const resultString = compile(sourceCode);
         if (compiles(resultString)) {
-          await assertSnapshot(s, resultString, {
-            name: "ts-sveltekit-autotypes-$props-rune-unchanged.v5",
-          });
+          await assertSnapshot(s, resultString);
         } else {
           fail("Failed to compile");
         }
@@ -2334,9 +2100,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-sveltekit-autotypes-$props-rune.v5",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2347,7 +2111,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-type-assertion" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2358,9 +2122,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "ts-typed-export-with-default",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2371,7 +2133,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "ts-uses-$$props" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2382,7 +2144,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "typeof-$store" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2393,7 +2155,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "uses-$$props-script" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2404,7 +2166,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "uses-$$props" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2415,9 +2177,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "uses-$$restProps-script",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2428,7 +2188,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "uses-$$restProps" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2439,7 +2199,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "uses-$$slots-script" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2450,7 +2210,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "uses-$$slots" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2461,7 +2221,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "uses-$property" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2472,9 +2232,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "uses-$store-in-event-binding",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2485,9 +2243,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "uses-$store-multiple-variable-declaration",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2498,9 +2254,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "uses-$store-with-assignment-operators",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2511,9 +2265,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "uses-$store-with-increments",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2524,9 +2276,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "uses-$store-with-unary-operators",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2537,7 +2287,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, { name: "uses-$store" });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2548,9 +2298,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "uses-accessors-attr-not-present",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2561,9 +2309,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "uses-accessors-attr-present",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2574,9 +2320,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "uses-accessors-mustachetag-false",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2587,9 +2331,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "uses-accessors-mustachetag-true",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2600,9 +2342,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "uses-accessors-no-svelte-options",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2613,9 +2353,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "uses-svelte-components-let-forward",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }
@@ -2626,9 +2364,7 @@ Deno.test({
       );
       const resultString = compile(sourceCode);
       if (compiles(resultString)) {
-        await assertSnapshot(s, resultString, {
-          name: "uses-svelte-components",
-        });
+        await assertSnapshot(s, resultString);
       } else {
         fail("Failed to compile");
       }

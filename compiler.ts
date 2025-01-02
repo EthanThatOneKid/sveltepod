@@ -33,7 +33,7 @@ if (import.meta.main) {
 
   sourceFile.addStatements(`Deno.test({
   name: "compile",
-  permissions: { read: true },
+  permissions: { read: true, write: true },
   async fn(t) {\n${
     (await Array.fromAsync(
       expandGlob("./svelte2tsx-samples/**/*.svelte"),
